@@ -9,6 +9,7 @@ const expenseSchema = new mongoose.Schema({
   date: { type: Date, required: true },
   description: { type: String, default: '' },
   receipt: { type: String, default: '' },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Expense', expenseSchema);

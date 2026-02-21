@@ -2,9 +2,15 @@ import { useEffect, useState } from 'react';
 import { getMaintenanceAPI, createMaintenanceAPI, updateMaintenanceAPI, deleteMaintenanceAPI, getVehiclesAPI } from '../api';
 import { PageHeader, Card, StatusPill, Modal, EmptyState } from '../components/UI';
 import { Wrench, Plus, Trash2, CheckCircle2 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { hasPermission } from '../config/rolePermissions';
 import toast from 'react-hot-toast';
 
 export default function MaintenanceLogs() {
+  const { user } = useAuth();
+  const canCreate = hasPermission(user?.role, 'maintenance', 'create');
+  const canEdit = hasPermission(user?.role, 'maintenance', 'edit');
+  const canDelete = hasPermission(user?.role, 'maintenance', 'delete');
   const [logs, setLogs] = useState([]);
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,9 +62,9 @@ export default function MaintenanceLogs() {
   return (
     <div>
       <PageHeader title="Maintenance & Service Logs" subtitle="Track preventative and reactive vehicle maintenance">
-        <button onClick={() => setModal(true)} className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all">
+        {canCreate && <button onClick={() => setModal(true)} className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all">
           <Plus size={16} /> New Log
-        </button>
+        </button>}
       </PageHeader>
 
       {loading ? (
@@ -91,15 +97,15 @@ export default function MaintenanceLogs() {
                     <td className="px-5 py-3.5"><StatusPill status={log.status} /></td>
                     <td className="px-5 py-3.5">
                       <div className="flex items-center justify-end gap-1">
-                        {log.status === 'Scheduled' && (
+                        {canEdit && log.status === 'Scheduled' && (
                           <button onClick={() => markInProgress(log._id)} className="px-2 py-1 text-xs bg-amber-50 text-amber-600 font-semibold rounded-lg hover:bg-amber-100 transition">Start</button>
                         )}
-                        {(log.status === 'In Progress' || log.status === 'Scheduled') && (
+                        {canEdit && (log.status === 'In Progress' || log.status === 'Scheduled') && (
                           <button onClick={() => markComplete(log._id)} className="flex items-center gap-1 px-2 py-1 text-xs bg-emerald-50 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-100 transition">
                             <CheckCircle2 size={12} /> Done
                           </button>
                         )}
-                        <button onClick={() => handleDelete(log._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={15} className="text-red-400" /></button>
+                        {canDelete && <button onClick={() => handleDelete(log._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={15} className="text-red-400" /></button>}
                       </div>
                     </td>
                   </tr>

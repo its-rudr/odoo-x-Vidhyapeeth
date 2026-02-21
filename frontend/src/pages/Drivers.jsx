@@ -2,11 +2,17 @@ import { useEffect, useState } from 'react';
 import { getDriversAPI, createDriverAPI, updateDriverAPI, deleteDriverAPI } from '../api';
 import { PageHeader, Card, StatusPill, Modal, EmptyState } from '../components/UI';
 import { Users, Plus, Edit2, Trash2, Search, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { hasPermission } from '../config/rolePermissions';
 import toast from 'react-hot-toast';
 
 const emptyForm = { name: '', email: '', phone: '', licenseNumber: '', licenseCategory: ['Van'], licenseExpiry: '', safetyScore: 100 };
 
 export default function Drivers() {
+  const { user } = useAuth();
+  const canCreate = hasPermission(user?.role, 'drivers', 'create');
+  const canEdit = hasPermission(user?.role, 'drivers', 'edit');
+  const canDelete = hasPermission(user?.role, 'drivers', 'delete');
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
@@ -78,9 +84,9 @@ export default function Drivers() {
   return (
     <div>
       <PageHeader title="Driver Profiles" subtitle="Manage drivers, compliance, and safety scores">
-        <button onClick={() => { setEditing(null); setForm(emptyForm); setModal(true); }} className="flex items-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-xl shadow-lg transition-all" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
+        {canCreate && <button onClick={() => { setEditing(null); setForm(emptyForm); setModal(true); }} className="flex items-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-xl shadow-lg transition-all" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
           <Plus size={16} /> Add Driver
-        </button>
+        </button>}
       </PageHeader>
 
       <div className="flex gap-3 mb-6">
@@ -139,13 +145,13 @@ export default function Drivers() {
                 </div>
 
                 <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
-                  <button onClick={() => handleEdit(d)} className="flex-1 flex items-center justify-center gap-1 py-1.5 text-xs font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 rounded-lg transition"><Edit2 size={12} /> Edit</button>
-                  {d.status !== 'Suspended' ? (
+                  {canEdit && <button onClick={() => handleEdit(d)} className="flex-1 flex items-center justify-center gap-1 py-1.5 text-xs font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 rounded-lg transition"><Edit2 size={12} /> Edit</button>}
+                  {canEdit && (d.status !== 'Suspended' ? (
                     <button onClick={() => handleStatusChange(d._id, 'Suspended')} className="flex-1 py-1.5 text-xs font-semibold text-amber-600 bg-amber-50 hover:bg-amber-100 rounded-lg transition">Suspend</button>
                   ) : (
                     <button onClick={() => handleStatusChange(d._id, 'On Duty')} className="flex-1 py-1.5 text-xs font-semibold text-emerald-600 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition">Activate</button>
-                  )}
-                  <button onClick={() => handleDelete(d._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={14} className="text-red-400" /></button>
+                  ))}
+                  {canDelete && <button onClick={() => handleDelete(d._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={14} className="text-red-400" /></button>}
                 </div>
               </Card>
             );

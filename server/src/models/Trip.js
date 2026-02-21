@@ -13,6 +13,7 @@ const tripSchema = new mongoose.Schema({
   scheduledDate: { type: Date, required: true },
   completedDate: { type: Date },
   notes: { type: String, default: '' },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Trip', tripSchema);

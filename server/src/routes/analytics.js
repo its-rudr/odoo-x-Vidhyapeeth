@@ -7,14 +7,15 @@ const Expense = require('../models/Expense');
 const { auth } = require('../middleware/auth');
 const router = express.Router();
 
-// Dashboard KPIs
+// Dashboard KPIs (user-scoped)
 router.get('/dashboard', auth, async (req, res) => {
   try {
+    const userId = req.user._id;
     const [vehicles, drivers, trips, expenses] = await Promise.all([
-      Vehicle.find(),
-      Driver.find(),
-      Trip.find(),
-      Expense.find(),
+      Vehicle.find({ createdBy: userId }),
+      Driver.find({ createdBy: userId }),
+      Trip.find({ createdBy: userId }),
+      Expense.find({ createdBy: userId }),
     ]);
 
     const activeFleet = vehicles.filter(v => v.status === 'On Trip').length;
@@ -28,8 +29,8 @@ router.get('/dashboard', auth, async (req, res) => {
     const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
     const fuelExpenses = expenses.filter(e => e.category === 'Fuel').reduce((sum, e) => sum + e.amount, 0);
 
-    // Recent trips
-    const recentTrips = await Trip.find()
+    // Recent trips (user-scoped)
+    const recentTrips = await Trip.find({ createdBy: userId })
       .populate('vehicle', 'name licensePlate')
       .populate('driver', 'name')
       .sort({ createdAt: -1 })
@@ -60,14 +61,15 @@ router.get('/dashboard', auth, async (req, res) => {
   }
 });
 
-// Analytics data
+// Analytics data (user-scoped)
 router.get('/analytics', auth, async (req, res) => {
   try {
+    const userId = req.user._id;
     const [vehicles, trips, expenses, maintenanceLogs] = await Promise.all([
-      Vehicle.find(),
-      Trip.find({ status: 'Completed' }).populate('vehicle', 'name licensePlate acquisitionCost'),
-      Expense.find().populate('vehicle', 'name licensePlate'),
-      Maintenance.find().populate('vehicle', 'name licensePlate'),
+      Vehicle.find({ createdBy: userId }),
+      Trip.find({ status: 'Completed', createdBy: userId }).populate('vehicle', 'name licensePlate acquisitionCost'),
+      Expense.find({ createdBy: userId }).populate('vehicle', 'name licensePlate'),
+      Maintenance.find({ createdBy: userId }).populate('vehicle', 'name licensePlate'),
     ]);
 
     // Fuel efficiency per vehicle

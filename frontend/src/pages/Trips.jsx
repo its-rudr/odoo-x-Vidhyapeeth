@@ -2,9 +2,15 @@ import { useEffect, useState } from 'react';
 import { getTripsAPI, createTripAPI, updateTripAPI, deleteTripAPI, getVehiclesAPI, getDriversAPI } from '../api';
 import { PageHeader, Card, StatusPill, Modal, EmptyState } from '../components/UI';
 import { Route, Plus, Trash2, Play, CheckCircle2, XCircle, ArrowRight } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { hasPermission } from '../config/rolePermissions';
 import toast from 'react-hot-toast';
 
 export default function Trips() {
+  const { user } = useAuth();
+  const canCreate = hasPermission(user?.role, 'trips', 'create');
+  const canEdit = hasPermission(user?.role, 'trips', 'edit');
+  const canDelete = hasPermission(user?.role, 'trips', 'delete');
   const [trips, setTrips] = useState([]);
   const [vehicles, setVehicles] = useState([]);
   const [drivers, setDrivers] = useState([]);
@@ -60,9 +66,9 @@ export default function Trips() {
   return (
     <div>
       <PageHeader title="Trip Dispatcher" subtitle="Create and manage cargo trips">
-        <button onClick={() => setModal(true)} className="flex items-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-xl shadow-lg transition-all" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
+        {canCreate && <button onClick={() => setModal(true)} className="flex items-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-xl shadow-lg transition-all" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
           <Plus size={16} /> New Trip
-        </button>
+        </button>}
       </PageHeader>
 
       <div className="flex gap-3 mb-6">
@@ -97,12 +103,12 @@ export default function Trips() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  {trip.status === 'Draft' && (
+                  {canEdit && trip.status === 'Draft' && (
                     <button onClick={() => updateStatus(trip._id, 'Dispatched')} className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-semibold rounded-lg hover:bg-blue-100 transition">
                       <Play size={13} /> Dispatch
                     </button>
                   )}
-                  {trip.status === 'Dispatched' && (
+                  {canEdit && trip.status === 'Dispatched' && (
                     <>
                       <button onClick={() => setCompleteModal(trip._id)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition" style={{ backgroundColor: '#FCF8D8', color: '#DD700B' }} onMouseEnter={(e) => { e.style.backgroundColor = 'rgba(252, 248, 216, 0.7)'; }} onMouseLeave={(e) => { e.style.backgroundColor = '#FCF8D8'; }}>
                         <CheckCircle2 size={13} /> Complete
@@ -112,7 +118,7 @@ export default function Trips() {
                       </button>
                     </>
                   )}
-                  {(trip.status === 'Draft' || trip.status === 'Completed' || trip.status === 'Cancelled') && (
+                  {canDelete && (trip.status === 'Draft' || trip.status === 'Completed' || trip.status === 'Cancelled') && (
                     <button onClick={() => handleDelete(trip._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={15} className="text-red-400" /></button>
                   )}
                 </div>

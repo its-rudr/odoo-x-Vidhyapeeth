@@ -1,18 +1,19 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { hasPermission, getRoleLabel, ROUTE_MODULE_MAP } from '../config/rolePermissions';
 import {
-  LayoutDashboard, Truck, Route, Wrench, Fuel, Users, BarChart3, LogOut, Menu, X, Zap, ChevronRight
+  LayoutDashboard, Truck, Route, Wrench, Fuel, Users, BarChart3, LogOut, Menu, X, Zap, ChevronRight, Shield
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-const links = [
-  { to: '/', icon: LayoutDashboard, label: 'Dashboard', desc: 'Overview' },
-  { to: '/vehicles', icon: Truck, label: 'Vehicles', desc: 'Fleet assets' },
-  { to: '/trips', icon: Route, label: 'Trips', desc: 'Dispatches' },
-  { to: '/maintenance', icon: Wrench, label: 'Maintenance', desc: 'Service logs' },
-  { to: '/expenses', icon: Fuel, label: 'Expenses', desc: 'Cost tracking' },
-  { to: '/drivers', icon: Users, label: 'Drivers', desc: 'Profiles' },
-  { to: '/analytics', icon: BarChart3, label: 'Analytics', desc: 'Reports' },
+const allLinks = [
+  { to: '/', icon: LayoutDashboard, label: 'Dashboard', desc: 'Overview', module: 'dashboard' },
+  { to: '/vehicles', icon: Truck, label: 'Vehicles', desc: 'Fleet assets', module: 'vehicles' },
+  { to: '/trips', icon: Route, label: 'Trips', desc: 'Dispatches', module: 'trips' },
+  { to: '/maintenance', icon: Wrench, label: 'Maintenance', desc: 'Service logs', module: 'maintenance' },
+  { to: '/expenses', icon: Fuel, label: 'Expenses', desc: 'Cost tracking', module: 'expenses' },
+  { to: '/drivers', icon: Users, label: 'Drivers', desc: 'Profiles', module: 'drivers' },
+  { to: '/analytics', icon: BarChart3, label: 'Analytics', desc: 'Reports', module: 'analytics' },
 ];
 
 export default function Sidebar() {
@@ -20,6 +21,9 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = useState(false);
+
+  // Filter links based on user role
+  const links = allLinks.filter(link => hasPermission(user?.role, link.module, 'view'));
 
   // Close mobile sidebar on route change
   useEffect(() => { setOpen(false); }, [location.pathname]);
@@ -93,7 +97,10 @@ export default function Sidebar() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-sm font-medium truncate text-slate-900">{user?.name}</p>
-              <p className="text-[11px] text-slate-500 capitalize">{user?.role?.replace('_', ' ')}</p>
+              <div className="flex items-center gap-1">
+                <Shield size={10} className="text-[#DD700B]" />
+                <p className="text-[11px] text-[#DD700B] font-medium">{getRoleLabel(user?.role)}</p>
+              </div>
             </div>
           </div>
           <button

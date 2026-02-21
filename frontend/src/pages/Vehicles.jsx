@@ -2,11 +2,17 @@ import { useEffect, useState } from 'react';
 import { getVehiclesAPI, createVehicleAPI, updateVehicleAPI, deleteVehicleAPI } from '../api';
 import { PageHeader, Card, StatusPill, Modal, EmptyState } from '../components/UI';
 import { Truck, Plus, Edit2, Trash2, Search } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { hasPermission } from '../config/rolePermissions';
 import toast from 'react-hot-toast';
 
 const emptyForm = { name: '', model: '', licensePlate: '', type: 'Van', maxCapacity: '', odometer: 0, acquisitionCost: 0, region: 'Default' };
 
 export default function Vehicles() {
+  const { user } = useAuth();
+  const canCreate = hasPermission(user?.role, 'vehicles', 'create');
+  const canEdit = hasPermission(user?.role, 'vehicles', 'edit');
+  const canDelete = hasPermission(user?.role, 'vehicles', 'delete');
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
@@ -66,9 +72,9 @@ export default function Vehicles() {
   return (
     <div>
       <PageHeader title="Vehicle Registry" subtitle="Manage your fleet assets">
-        <button onClick={() => { setEditing(null); setForm(emptyForm); setModal(true); }} className="flex items-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-xl shadow-lg transition-all" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
+        {canCreate && <button onClick={() => { setEditing(null); setForm(emptyForm); setModal(true); }} className="flex items-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-xl shadow-lg transition-all" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
           <Plus size={16} /> Add Vehicle
-        </button>
+        </button>}
       </PageHeader>
 
       {/* Filters */}
@@ -120,9 +126,9 @@ export default function Vehicles() {
                     <td className="px-5 py-3.5"><StatusPill status={v.status} /></td>
                     <td className="px-5 py-3.5">
                       <div className="flex items-center justify-end gap-1">
-                        <button onClick={() => handleEdit(v)} className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors" title="Edit"><Edit2 size={15} className="text-slate-500" /></button>
-                        <button onClick={() => handleToggleOOS(v)} className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors text-xs text-amber-600 font-medium" title="Toggle Out of Service">{v.status === 'Out of Service' ? 'Activate' : 'Retire'}</button>
-                        <button onClick={() => handleDelete(v._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition-colors" title="Delete"><Trash2 size={15} className="text-red-400" /></button>
+                        {canEdit && <button onClick={() => handleEdit(v)} className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors" title="Edit"><Edit2 size={15} className="text-slate-500" /></button>}
+                        {canEdit && <button onClick={() => handleToggleOOS(v)} className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors text-xs text-amber-600 font-medium" title="Toggle Out of Service">{v.status === 'Out of Service' ? 'Activate' : 'Retire'}</button>}
+                        {canDelete && <button onClick={() => handleDelete(v._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition-colors" title="Delete"><Trash2 size={15} className="text-red-400" /></button>}
                       </div>
                     </td>
                   </tr>

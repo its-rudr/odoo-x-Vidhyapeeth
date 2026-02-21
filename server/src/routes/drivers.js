@@ -1,14 +1,14 @@
 const express = require('express');
 const Driver = require('../models/Driver');
-const { auth } = require('../middleware/auth');
+const { auth, authorize } = require('../middleware/auth');
 const { validate, validateDriver } = require('../middleware/validate');
 const router = express.Router();
 
-// Get all drivers
+// Get all drivers (user-scoped)
 router.get('/', auth, async (req, res) => {
   try {
     const { status, search } = req.query;
-    const filter = {};
+    const filter = { createdBy: req.user._id };
     if (status) filter.status = status;
     if (search) filter.$or = [
       { name: { $regex: search, $options: 'i' } },
@@ -21,10 +21,10 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// Get single driver
+// Get single driver (user-scoped)
 router.get('/:id', auth, async (req, res) => {
   try {
-    const driver = await Driver.findById(req.params.id);
+    const driver = await Driver.findOne({ _id: req.params.id, createdBy: req.user._id });
     if (!driver) return res.status(404).json({ message: 'Driver not found.' });
     res.json(driver);
   } catch (error) {
@@ -32,32 +32,36 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
-// Create driver
-router.post('/', auth, validate(validateDriver), async (req, res) => {
+// Create driver (manager, safety_officer only)
+router.post('/', auth, authorize('manager', 'safety_officer'), validate(validateDriver), async (req, res) => {
   try {
-    const driver = await Driver.create(req.body);
+    const driver = await Driver.create({ ...req.body, createdBy: req.user._id });
     res.status(201).json(driver);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Update driver
-router.put('/:id', auth, async (req, res) => {
+// Update driver (owner only, manager/safety_officer)
+router.put('/:id', auth, authorize('manager', 'safety_officer'), async (req, res) => {
   try {
-    const driver = await Driver.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-    if (!driver) return res.status(404).json({ message: 'Driver not found.' });
+    const driver = await Driver.findOneAndUpdate(
+      { _id: req.params.id, createdBy: req.user._id },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!driver) return res.status(404).json({ message: 'Driver not found or access denied.' });
     res.json(driver);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Delete driver
-router.delete('/:id', auth, async (req, res) => {
+// Delete driver (owner only, manager only)
+router.delete('/:id', auth, authorize('manager'), async (req, res) => {
   try {
-    const driver = await Driver.findByIdAndDelete(req.params.id);
-    if (!driver) return res.status(404).json({ message: 'Driver not found.' });
+    const driver = await Driver.findOneAndDelete({ _id: req.params.id, createdBy: req.user._id });
+    if (!driver) return res.status(404).json({ message: 'Driver not found or access denied.' });
     res.json({ message: 'Driver deleted successfully.' });
   } catch (error) {
     res.status(500).json({ message: error.message });

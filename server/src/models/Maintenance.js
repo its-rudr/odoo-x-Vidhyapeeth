@@ -10,6 +10,7 @@ const maintenanceSchema = new mongoose.Schema({
   completedDate: { type: Date },
   mechanic: { type: String, default: '' },
   notes: { type: String, default: '' },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Maintenance', maintenanceSchema);

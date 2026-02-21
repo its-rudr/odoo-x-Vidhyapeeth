@@ -11,6 +11,7 @@ const vehicleSchema = new mongoose.Schema({
   acquisitionCost: { type: Number, default: 0 },
   region: { type: String, default: 'Default' },
   imageUrl: { type: String, default: '' },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Vehicle', vehicleSchema);

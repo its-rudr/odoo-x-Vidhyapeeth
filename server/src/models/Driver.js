@@ -11,6 +11,7 @@ const driverSchema = new mongoose.Schema({
   safetyScore: { type: Number, default: 100, min: 0, max: 100 },
   tripsCompleted: { type: Number, default: 0 },
   tripsCancelled: { type: Number, default: 0 },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true });
 
 driverSchema.virtual('isLicenseValid').get(function () {

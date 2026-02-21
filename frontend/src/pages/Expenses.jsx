@@ -2,9 +2,14 @@ import { useEffect, useState } from 'react';
 import { getExpensesAPI, createExpenseAPI, deleteExpenseAPI, getVehiclesAPI, getTripsAPI } from '../api';
 import { PageHeader, Card, StatusPill, Modal, EmptyState } from '../components/UI';
 import { Fuel, Plus, Trash2, DollarSign } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { hasPermission } from '../config/rolePermissions';
 import toast from 'react-hot-toast';
 
 export default function Expenses() {
+  const { user } = useAuth();
+  const canCreate = hasPermission(user?.role, 'expenses', 'create');
+  const canDelete = hasPermission(user?.role, 'expenses', 'delete');
   const [expenses, setExpenses] = useState([]);
   const [vehicles, setVehicles] = useState([]);
   const [trips, setTrips] = useState([]);
@@ -51,9 +56,9 @@ export default function Expenses() {
   return (
     <div>
       <PageHeader title="Expenses & Fuel Logging" subtitle="Track operational costs per vehicle">
-        <button onClick={() => setModal(true)} className="flex items-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-xl shadow-lg transition-all" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
+        {canCreate && <button onClick={() => setModal(true)} className="flex items-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-xl shadow-lg transition-all" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
           <Plus size={16} /> Record Expense
-        </button>
+        </button>}
       </PageHeader>
 
       {/* Summary Cards */}
@@ -109,7 +114,7 @@ export default function Expenses() {
                     <td className="px-5 py-3.5 text-slate-500">{new Date(exp.date).toLocaleDateString()}</td>
                     <td className="px-5 py-3.5 text-slate-500 max-w-xs truncate">{exp.description || '—'}</td>
                     <td className="px-5 py-3.5 text-right">
-                      <button onClick={() => handleDelete(exp._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={15} className="text-red-400" /></button>
+                      {canDelete && <button onClick={() => handleDelete(exp._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={15} className="text-red-400" /></button>}
                     </td>
                   </tr>
                 ))}

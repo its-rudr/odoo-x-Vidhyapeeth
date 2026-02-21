@@ -19,7 +19,13 @@ export default function Login() {
     if (!form.email.trim()) errs.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = 'Invalid email format';
     if (!form.password) errs.password = 'Password is required';
-    else if (form.password.length < 6) errs.password = 'Password must be at least 6 characters';
+    else if (isRegister) {
+      if (form.password.length < 8) errs.password = 'Min 8 characters required';
+      else if (!/[A-Z]/.test(form.password)) errs.password = 'Need at least one uppercase letter';
+      else if (!/[a-z]/.test(form.password)) errs.password = 'Need at least one lowercase letter';
+      else if (!/[0-9]/.test(form.password)) errs.password = 'Need at least one number';
+      else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(form.password)) errs.password = 'Need at least one special character';
+    }
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -110,10 +116,14 @@ export default function Login() {
                 value={form.password}
                 onChange={(e) => { setForm({ ...form, password: e.target.value }); setErrors(prev => ({ ...prev, password: '' })); }}
                 required
-                minLength={6}
-                className={`w-full pl-10 pr-4 py-3 bg-white/5 border ${errors.password ? 'border-red-500 ring-1 ring-red-500/50' : 'border-white/10'} rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition text-sm`}
+                minLength={8}
+                className="w-full pl-10 pr-4 py-3 border rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 transition text-sm"
+                style={{ borderColor: errors.password ? '#EF4444' : '#D9DADF', '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }}
+                onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }}
+                onBlur={(e) => { e.target.style.borderColor = errors.password ? '#EF4444' : '#D9DADF'; }}
               />
               {errors.password && <p className="text-xs text-red-400 mt-1 ml-1">{errors.password}</p>}
+              {isRegister && !errors.password && <p className="text-xs text-slate-400 mt-1 ml-1">Min 8 chars: uppercase, lowercase, number & special char</p>}
             </div>
 
             {isRegister && (

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { hasPermission } from './config/rolePermissions';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -14,7 +15,7 @@ function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-      <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+      <div className="w-10 h-10 border-4 border-[#DD700B] border-t-transparent rounded-full animate-spin" />
     </div>
   );
   return user ? children : <Navigate to="/login" replace />;
@@ -26,6 +27,15 @@ function PublicRoute({ children }) {
   return user ? <Navigate to="/" replace /> : children;
 }
 
+// Role-based route guard - redirects to dashboard if no permission
+function RoleRoute({ module, children }) {
+  const { user } = useAuth();
+  if (!user || !hasPermission(user.role, module, 'view')) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -34,12 +44,12 @@ export default function App() {
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
           <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
             <Route index element={<Dashboard />} />
-            <Route path="vehicles" element={<Vehicles />} />
-            <Route path="trips" element={<Trips />} />
-            <Route path="maintenance" element={<MaintenanceLogs />} />
-            <Route path="expenses" element={<Expenses />} />
-            <Route path="drivers" element={<Drivers />} />
-            <Route path="analytics" element={<Analytics />} />
+            <Route path="vehicles" element={<RoleRoute module="vehicles"><Vehicles /></RoleRoute>} />
+            <Route path="trips" element={<RoleRoute module="trips"><Trips /></RoleRoute>} />
+            <Route path="maintenance" element={<RoleRoute module="maintenance"><MaintenanceLogs /></RoleRoute>} />
+            <Route path="expenses" element={<RoleRoute module="expenses"><Expenses /></RoleRoute>} />
+            <Route path="drivers" element={<RoleRoute module="drivers"><Drivers /></RoleRoute>} />
+            <Route path="analytics" element={<RoleRoute module="analytics"><Analytics /></RoleRoute>} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
