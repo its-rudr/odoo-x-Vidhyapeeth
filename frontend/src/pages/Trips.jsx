@@ -104,7 +104,7 @@ export default function Trips() {
                 </div>
                 {(canEdit || canDelete) && <div className="flex items-center gap-2">
                   {canEdit && trip.status === 'Draft' && (
-                    <button onClick={() => updateStatus(trip._id, 'Dispatched')} className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-semibold rounded-lg hover:bg-blue-100 transition">
+                    <button onClick={() => updateStatus(trip._id, 'Dispatched')} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition text-white" style={{ backgroundColor: '#DD700B' }}>
                       <Play size={13} /> Dispatch
                     </button>
                   )}

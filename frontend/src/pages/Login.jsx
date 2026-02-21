@@ -97,7 +97,7 @@ export default function Login() {
                 onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }}
                 onBlur={(e) => { e.target.style.borderColor = errors.email ? '#EF4444' : '#D9DADF'; }}
               />
-              {errors.email && <p className="text-xs text-red-400 mt-1 ml-1">{errors.email}</p>}
+              {errors.email && <p className="text-xs text-red-500 mt-1 ml-1">{errors.email}</p>}
             </div>
 
             <div className="relative">
@@ -114,7 +114,7 @@ export default function Login() {
                 onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }}
                 onBlur={(e) => { e.target.style.borderColor = errors.password ? '#EF4444' : '#D9DADF'; }}
               />
-              {errors.password && <p className="text-xs text-red-400 mt-1 ml-1">{errors.password}</p>}
+              {errors.password && <p className="text-xs text-red-500 mt-1 ml-1">{errors.password}</p>}
             </div>
 
             <button

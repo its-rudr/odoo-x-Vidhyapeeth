@@ -7,7 +7,7 @@ import { Truck, AlertTriangle, Gauge, Package, CheckCircle2, Users, DollarSign, 
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import toast from 'react-hot-toast';
 
-const PIE_COLORS = ['#DD700B', '#3B82F6', '#059669', '#7C3AED', '#DC2626', '#D97706'];
+const PIE_COLORS = ['#DD700B', '#7C7D75', '#ADACA7', '#D9DADF', '#FCF8D8', '#DD700B'];
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -81,7 +81,7 @@ export default function Dashboard() {
           <option value="West">West</option>
         </select>
         {(filters.type || filters.status || filters.region) && (
-          <button onClick={() => setFilters({ type: '', status: '', region: '' })} className="px-3 py-2 text-xs font-semibold text-red-500 bg-red-50 hover:bg-red-100 rounded-xl transition">Clear</button>
+          <button onClick={() => setFilters({ type: '', status: '', region: '' })} className="px-3 py-2 text-xs font-semibold text-white rounded-xl transition" style={{ backgroundColor: '#DD700B' }}>Clear</button>
         )}
       </div>
 

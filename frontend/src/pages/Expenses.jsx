@@ -69,11 +69,11 @@ export default function Expenses() {
         </Card>
         <Card className="p-4 text-center">
           <p className="text-xs text-slate-500 font-medium">Fuel Costs</p>
-          <p className="text-2xl font-bold text-blue-600 mt-1">₹{fuelTotal.toLocaleString()}</p>
+          <p className="text-2xl font-bold mt-1" style={{ color: '#DD700B' }}>₹{fuelTotal.toLocaleString()}</p>
         </Card>
         <Card className="p-4 text-center">
           <p className="text-xs text-slate-500 font-medium">Maintenance Costs</p>
-          <p className="text-2xl font-bold text-amber-600 mt-1">₹{maintenanceTotal.toLocaleString()}</p>
+          <p className="text-2xl font-bold mt-1" style={{ color: '#DD700B' }}>₹{maintenanceTotal.toLocaleString()}</p>
         </Card>
       </div>
 
