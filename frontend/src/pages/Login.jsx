@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, ArrowLeft, Shield, ShieldAlert, HardHat, Banknote, ArrowRight } from 'lucide-react';
+import { Mail, Lock, ArrowLeft, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { Shield, ShieldAlert, HardHat, Banknote } from 'lucide-react';
 
 const roles = [
   { id: 'manager', label: 'Fleet Manager', icon: Shield, color: '#DD700B' },
-  { id: 'dispatcher', label: 'Dispatcher', icon: ShieldAlert, color: '#DD700B' },
-  { id: 'safety', label: 'Safety Officer', icon: HardHat, color: '#DD700B' },
-  { id: 'finance', label: 'Finance Analyst', icon: Banknote, color: '#DD700B' },
+  { id: 'dispatcher', label: 'Dispatcher', icon: ShieldAlert, color: '#2563EB' },
+  { id: 'safety', label: 'Safety Officer', icon: HardHat, color: '#059669' },
+  { id: 'finance', label: 'Finance Analyst', icon: Banknote, color: '#7C3AED' },
 ];
 
 export default function Login() {
@@ -85,11 +86,22 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="relative w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl shadow-lg mb-4">
-            <img src="/logo.png" alt="FleetFlow" className="w-16 h-16 object-contain" />
+      {/* ──────── Right Pane: Form ──────── */}
+      <div className="flex-1 h-full flex items-center justify-center p-4 md:p-8 bg-white md:bg-transparent overflow-y-auto no-scrollbar">
+        <div className="w-full max-w-[420px] flex flex-col justify-center py-2">
+          <div className="mb-6">
+            <div className="md:hidden flex items-center gap-4 mb-4">
+              <div className="w-11 h-11 rounded-xl bg-white p-1.5 shadow-lg border border-slate-100 flex items-center justify-center">
+                <img src="/Images/FleetFlow.webp" alt="FleetFlow" className="w-full h-full object-contain rounded-md" />
+              </div>
+              <span className="text-2xl font-black text-slate-900 tracking-tight">FleetFlow</span>
+            </div>
+            <h2 className="font-black text-slate-900 tracking-tight leading-none text-4xl mb-2">
+              Welcome Back
+            </h2>
+            <p className="text-slate-500 font-medium text-sm">
+              Select your operational role and sign in.
+            </p>
           </div>
 
           {/* Role Selection Grid */}
@@ -129,10 +141,10 @@ export default function Login() {
                 placeholder="Email Address"
                 value={form.email}
                 onChange={(e) => { setForm({ ...form, email: e.target.value }); setErrors(prev => ({ ...prev, email: '' })); }}
-                className={`w-full pl-11 pr-5 py-3.5 bg-white border-2 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-[#DD700B]/5 transition-all text-sm font-medium ${errors.email ? 'border-red-500' : 'border-slate-200 focus:border-[#DD700B]'}`}
+                className={`w-full pl-11 pr-5 py-3.5 bg-white border-2 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-[#DD700B]/5 transition-all text-sm font-medium ${errors.email ? 'border-red-400' : 'border-slate-200 focus:border-[#DD700B]'}`}
                 required
               />
-              {errors.email && <p className="text-xs text-red-500 mt-1 ml-1">{errors.email}</p>}
+              {errors.email && <p className="text-[10px] text-red-500 mt-1 ml-1 font-bold italic">{errors.email}</p>}
             </div>
 
             <div className="group relative">
@@ -142,11 +154,11 @@ export default function Login() {
                 placeholder="Password"
                 value={form.password}
                 onChange={(e) => { setForm({ ...form, password: e.target.value }); setErrors(prev => ({ ...prev, password: '' })); }}
-                className={`w-full pl-11 pr-5 py-3.5 bg-white border-2 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-[#DD700B]/5 transition-all text-sm font-medium ${errors.password ? 'border-red-500' : 'border-slate-200 focus:border-[#DD700B]'}`}
+                className={`w-full pl-11 pr-5 py-3.5 bg-white border-2 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-[#DD700B]/5 transition-all text-sm font-medium ${errors.password ? 'border-red-400' : 'border-slate-200 focus:border-[#DD700B]'}`}
                 required
                 minLength={8}
               />
-              {errors.password && <p className="text-xs text-red-500 mt-1 ml-1">{errors.password}</p>}
+              {errors.password && <p className="text-[10px] text-red-500 mt-1 ml-1 font-bold italic">{errors.password}</p>}
             </div>
 
             <div className="flex items-center justify-between pb-1">
