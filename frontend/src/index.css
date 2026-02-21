@@ -20,6 +20,12 @@ option {
   font-family: 'Bricolage Grotesque', sans-serif;
 }
 
+@layer base {
+  body {
+    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  }
+}
+
 :root {
   --color-primary: #DD700B;
   --color-secondary: #7C7D75;

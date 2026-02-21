@@ -37,7 +37,8 @@ export default function Analytics() {
     printWindow.document.write(`
       <html><head><title>FleetFlow Analytics Report</title>
       <style>
-        body{font-family:system-ui,-apple-system,sans-serif;padding:40px;color:#1e293b}
+        @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+        body{font-family:'Bricolage Grotesque',system-ui,sans-serif;padding:40px;color:#1e293b}
         h1{font-size:24px;margin-bottom:4px}
         .subtitle{color:#64748b;font-size:13px;margin-bottom:24px}
         .summary{display:flex;gap:24px;margin-bottom:32px}
