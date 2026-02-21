@@ -1,12 +1,49 @@
-function App() {
-  return (
-    <main className="min-h-screen bg-slate-100 text-slate-900 flex items-center justify-center p-6">
-      <section className="w-full max-w-xl rounded-xl bg-white shadow p-8 text-center">
-        <h1 className="text-3xl font-bold mb-3">MERN Frontend Ready</h1>
-        <p className="text-slate-600">React + Tailwind is configured in the frontend folder.</p>
-      </section>
-    </main>
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import Layout from './components/Layout';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Vehicles from './pages/Vehicles';
+import Trips from './pages/Trips';
+import MaintenanceLogs from './pages/Maintenance';
+import Expenses from './pages/Expenses';
+import Drivers from './pages/Drivers';
+import Analytics from './pages/Analytics';
+
+function ProtectedRoute({ children }) {
+  const { user, loading } = useAuth();
+  if (loading) return (
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+    </div>
   );
+  return user ? children : <Navigate to="/login" replace />;
 }
 
-export default App;
+function PublicRoute({ children }) {
+  const { user, loading } = useAuth();
+  if (loading) return null;
+  return user ? <Navigate to="/" replace /> : children;
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+          <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+            <Route index element={<Dashboard />} />
+            <Route path="vehicles" element={<Vehicles />} />
+            <Route path="trips" element={<Trips />} />
+            <Route path="maintenance" element={<MaintenanceLogs />} />
+            <Route path="expenses" element={<Expenses />} />
+            <Route path="drivers" element={<Drivers />} />
+            <Route path="analytics" element={<Analytics />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
