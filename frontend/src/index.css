@@ -4,6 +4,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global Font Family */
+* {
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+html,
+body,
+input,
+textarea,
+select,
+button,
+optgroup,
+option {
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
 @layer base {
   body {
     font-family: 'Bricolage Grotesque', system-ui, sans-serif;

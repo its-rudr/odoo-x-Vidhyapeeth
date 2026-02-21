@@ -62,13 +62,13 @@ export default function MaintenanceLogs() {
   return (
     <div>
       <PageHeader title="Maintenance & Service Logs" subtitle="Track preventative and reactive vehicle maintenance">
-        {canCreate && <button onClick={() => setModal(true)} className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all">
+        {canCreate && <button onClick={() => setModal(true)} className="flex items-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-xl shadow-lg transition-all" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
           <Plus size={16} /> New Log
         </button>}
       </PageHeader>
 
       {loading ? (
-        <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 rounded-full animate-spin" style={{ borderColor: '#DD700B', borderTopColor: 'transparent' }} /></div>
       ) : logs.length === 0 ? (
         <Card><EmptyState icon={Wrench} title="No maintenance logs" description="Create your first service log" /></Card>
       ) : (
@@ -98,11 +98,11 @@ export default function MaintenanceLogs() {
                     {(canEdit || canDelete) && <td className="px-5 py-3.5">
                       <div className="flex items-center justify-end gap-1">
                         {canEdit && log.status === 'Scheduled' && (
-                          <button onClick={() => markInProgress(log._id)} className="px-2 py-1 text-xs bg-amber-50 text-amber-600 font-semibold rounded-lg hover:bg-amber-100 transition">Start</button>
+                          <button onClick={() => markInProgress(log._id)} className="px-2 py-1 text-xs font-semibold rounded-lg transition" style={{ color: '#DD700B', backgroundColor: 'rgba(252, 248, 216, 0.7)' }}>Start</button>
                         )}
                         {canEdit && (log.status === 'In Progress' || log.status === 'Scheduled') && (
-                          <button onClick={() => markComplete(log._id)} className="flex items-center gap-1 px-2 py-1 text-xs bg-emerald-50 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-100 transition">
-                            <CheckCircle2 size={12} /> Done
+                          <button onClick={() => markComplete(log._id)} className="flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-lg transition text-white" style={{ backgroundColor: '#DD700B' }}>
+                            <CheckCircle2 size={13} /> Done
                           </button>
                         )}
                         {canDelete && <button onClick={() => handleDelete(log._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={15} className="text-red-400" /></button>}
@@ -120,7 +120,7 @@ export default function MaintenanceLogs() {
         <form onSubmit={handleCreate} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1">Vehicle</label>
-            <select required value={form.vehicle} onChange={(e) => setForm({ ...form, vehicle: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30">
+            <select required value={form.vehicle} onChange={(e) => setForm({ ...form, vehicle: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ focusBoxShadow: 'none' }} onFocus={(e) => { e.target.style.boxShadow = '0 0 0 3px rgba(221, 112, 11, 0.1)'; }} onBlur={(e) => { e.target.style.boxShadow = ''; }}>
               <option value="">Select vehicle</option>
               {vehicles.map((v) => <option key={v._id} value={v._id}>{v.name} ({v.licensePlate})</option>)}
             </select>
@@ -128,30 +128,30 @@ export default function MaintenanceLogs() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-600 mb-1">Type</label>
-              <select required value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30">
+              <select required value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ focusBoxShadow: 'none' }} onFocus={(e) => { e.target.style.boxShadow = '0 0 0 3px rgba(221, 112, 11, 0.1)'; }} onBlur={(e) => { e.target.style.boxShadow = ''; }}>
                 <option>Preventive</option><option>Reactive</option><option>Inspection</option>
               </select>
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-600 mb-1">Cost (₹)</label>
-              <input required type="number" min="0" value={form.cost} onChange={(e) => setForm({ ...form, cost: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30" />
+              <input required type="number" min="0" value={form.cost} onChange={(e) => setForm({ ...form, cost: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ focusBoxShadow: 'none' }} onFocus={(e) => { e.target.style.boxShadow = '0 0 0 3px rgba(221, 112, 11, 0.1)'; }} onBlur={(e) => { e.target.style.boxShadow = ''; }} />
             </div>
           </div>
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1">Description</label>
-            <input required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30" placeholder="e.g. Oil Change, Brake Repair" />
+            <input required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ focusBoxShadow: 'none' }} onFocus={(e) => { e.target.style.boxShadow = '0 0 0 3px rgba(221, 112, 11, 0.1)'; }} onBlur={(e) => { e.target.style.boxShadow = ''; }} placeholder="e.g. Oil Change, Brake Repair" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-600 mb-1">Scheduled Date</label>
-              <input required type="date" value={form.scheduledDate} onChange={(e) => setForm({ ...form, scheduledDate: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30" />
+              <input required type="date" value={form.scheduledDate} onChange={(e) => setForm({ ...form, scheduledDate: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ focusBoxShadow: 'none' }} onFocus={(e) => { e.target.style.boxShadow = '0 0 0 3px rgba(221, 112, 11, 0.1)'; }} onBlur={(e) => { e.target.style.boxShadow = ''; }} />
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-600 mb-1">Mechanic</label>
-              <input value={form.mechanic} onChange={(e) => setForm({ ...form, mechanic: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30" />
+              <input value={form.mechanic} onChange={(e) => setForm({ ...form, mechanic: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ focusBoxShadow: 'none' }} onFocus={(e) => { e.target.style.boxShadow = '0 0 0 3px rgba(221, 112, 11, 0.1)'; }} onBlur={(e) => { e.target.style.boxShadow = ''; }} />
             </div>
           </div>
-          <button type="submit" className="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all text-sm">
+          <button type="submit" className="w-full py-2.5 text-white font-semibold rounded-xl shadow-lg transition-all text-sm" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.style.backgroundColor = '#DD700B'; }}>
             Create Log
           </button>
         </form>

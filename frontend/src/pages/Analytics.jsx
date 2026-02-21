@@ -49,8 +49,8 @@ export default function Analytics() {
         th{text-align:left;padding:10px 12px;background:#f1f5f9;border-bottom:2px solid #e2e8f0;font-size:11px;text-transform:uppercase;color:#64748b}
         td{padding:10px 12px;border-bottom:1px solid #f1f5f9}
         tr:hover{background:#f8fafc}
-        .positive{color:#059669;font-weight:600}
-        .negative{color:#dc2626;font-weight:600}
+        .positive{color:#DD700B;font-weight:600}
+        .negative{color:#7C7D75;font-weight:600}
         .footer{margin-top:40px;text-align:center;font-size:11px;color:#94a3b8}
       </style></head><body>
       <h1>FleetFlow Analytics Report</h1>
@@ -71,7 +71,7 @@ export default function Analytics() {
     toast.success('PDF print dialog opened!');
   };
 
-  if (loading) return <div className="flex items-center justify-center h-96"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center h-96"><div className="w-8 h-8 border-4 rounded-full animate-spin" style={{ borderColor: '#DD700B', borderTopColor: 'transparent' }} /></div>;
 
   const summary = data?.summary || {};
   const vehicleAnalytics = data?.vehicleAnalytics || [];
@@ -94,7 +94,7 @@ export default function Analytics() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <Card className="p-5">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-blue-50"><Fuel size={20} className="text-blue-600" /></div>
+            <div className="p-2.5 rounded-xl" style={{ backgroundColor: 'rgba(252, 248, 216, 0.5)' }}><Fuel size={20} style={{ color: '#DD700B' }} /></div>
             <div>
               <p className="text-xs text-slate-500">Total Fuel Cost</p>
               <p className="text-xl font-bold text-slate-900">₹{(summary.totalFuelCost || 0).toLocaleString()}</p>
@@ -103,7 +103,7 @@ export default function Analytics() {
         </Card>
         <Card className="p-5">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-amber-50"><Wrench size={20} className="text-amber-600" /></div>
+            <div className="p-2.5 rounded-xl" style={{ backgroundColor: 'rgba(252, 248, 216, 0.5)' }}><Wrench size={20} style={{ color: '#DD700B' }} /></div>
             <div>
               <p className="text-xs text-slate-500">Total Maintenance</p>
               <p className="text-xl font-bold text-slate-900">₹{(summary.totalMaintenanceCost || 0).toLocaleString()}</p>
@@ -112,7 +112,7 @@ export default function Analytics() {
         </Card>
         <Card className="p-5">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-emerald-50"><TrendingUp size={20} className="text-emerald-600" /></div>
+            <div className="p-2.5 rounded-xl" style={{ backgroundColor: 'rgba(252, 248, 216, 0.5)' }}><TrendingUp size={20} style={{ color: '#DD700B' }} /></div>
             <div>
               <p className="text-xs text-slate-500">Total Distance</p>
               <p className="text-xl font-bold text-slate-900">{(summary.totalKm || 0).toLocaleString()} km</p>
@@ -121,7 +121,7 @@ export default function Analytics() {
         </Card>
         <Card className="p-5">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-violet-50"><DollarSign size={20} className="text-violet-600" /></div>
+            <div className="p-2.5 rounded-xl" style={{ backgroundColor: 'rgba(252, 248, 216, 0.5)' }}><DollarSign size={20} style={{ color: '#DD700B' }} /></div>
             <div>
               <p className="text-xs text-slate-500">Total Fuel Used</p>
               <p className="text-xl font-bold text-slate-900">{(summary.totalLiters || 0).toLocaleString()} L</p>
@@ -135,7 +135,7 @@ export default function Analytics() {
         {/* Monthly Expense Trend */}
         <Card className="p-6">
           <h3 className="text-sm font-semibold text-slate-900 mb-4 flex items-center gap-2">
-            <BarChart3 size={16} className="text-emerald-500" /> Monthly Expense Trend
+            <BarChart3 size={16} style={{ color: '#DD700B' }} /> Monthly Expense Trend
           </h3>
           {expenseTrend.length > 0 ? (
             <div className="h-72">
@@ -146,9 +146,9 @@ export default function Analytics() {
                   <YAxis tick={{ fontSize: 12 }} />
                   <Tooltip formatter={(val) => [`₹${val.toLocaleString()}`]} contentStyle={{ borderRadius: '12px', fontSize: '12px' }} />
                   <Legend />
-                  <Bar dataKey="fuel" name="Fuel" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="maintenance" name="Maintenance" fill="#f59e0b" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="other" name="Other" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="fuel" name="Fuel" fill="#DD700B" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="maintenance" name="Maintenance" fill="#7C7D75" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="other" name="Other" fill="#ADACA7" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -160,7 +160,7 @@ export default function Analytics() {
         {/* Cost Trend Line */}
         <Card className="p-6">
           <h3 className="text-sm font-semibold text-slate-900 mb-4 flex items-center gap-2">
-            <TrendingUp size={16} className="text-blue-500" /> Total Cost Trend
+            <TrendingUp size={16} style={{ color: '#DD700B' }} /> Total Cost Trend
           </h3>
           {expenseTrend.length > 0 ? (
             <div className="h-72">
@@ -170,7 +170,7 @@ export default function Analytics() {
                   <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                   <YAxis tick={{ fontSize: 12 }} />
                   <Tooltip formatter={(val) => [`₹${val.toLocaleString()}`]} contentStyle={{ borderRadius: '12px', fontSize: '12px' }} />
-                  <Line type="monotone" dataKey="total" name="Total Cost" stroke="#10b981" strokeWidth={3} dot={{ r: 5 }} />
+                  <Line type="monotone" dataKey="total" name="Total Cost" stroke="#DD700B" strokeWidth={3} dot={{ r: 5 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -207,18 +207,18 @@ export default function Analytics() {
                   <tr key={i} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-5 py-3.5 font-semibold text-slate-900">{v.name}</td>
                     <td className="px-5 py-3.5 font-mono text-slate-600">{v.plate}</td>
-                    <td className="px-5 py-3.5 text-blue-600">₹{v.fuel.toLocaleString()}</td>
-                    <td className="px-5 py-3.5 text-amber-600">₹{v.maintenance.toLocaleString()}</td>
+                    <td className="px-5 py-3.5" style={{ color: '#DD700B' }}>₹{v.fuel.toLocaleString()}</td>
+                    <td className="px-5 py-3.5" style={{ color: '#DD700B' }}>₹{v.maintenance.toLocaleString()}</td>
                     <td className="px-5 py-3.5 font-bold text-slate-900">₹{v.totalCost.toLocaleString()}</td>
                     <td className="px-5 py-3.5 text-slate-600">{v.km.toLocaleString()} km</td>
                     <td className="px-5 py-3.5">
-                      <span className={`font-semibold ${v.fuelEfficiency !== 'N/A' ? 'text-emerald-600' : 'text-slate-400'}`}>
+                      <span className={`font-semibold ${v.fuelEfficiency !== 'N/A' ? 'text-white px-2 py-1 rounded' : 'text-slate-400'}`} style={v.fuelEfficiency !== 'N/A' ? { backgroundColor: '#DD700B' } : {}}>
                         {v.fuelEfficiency} {v.fuelEfficiency !== 'N/A' && 'km/L'}
                       </span>
                     </td>
                     <td className="px-5 py-3.5 text-slate-700">{v.costPerKm !== 'N/A' ? `₹${v.costPerKm}` : 'N/A'}</td>
                     <td className="px-5 py-3.5">
-                      <span className={`font-semibold ${v.roi !== 'N/A' ? (parseFloat(v.roi) >= 0 ? 'text-emerald-600' : 'text-red-600') : 'text-slate-400'}`}>
+                      <span className={`font-semibold ${v.roi !== 'N/A' ? (parseFloat(v.roi) >= 0 ? 'text-white px-2 py-1 rounded' : 'text-red-600') : 'text-slate-400'}`} style={v.roi !== 'N/A' && parseFloat(v.roi) >= 0 ? { backgroundColor: '#DD700B' } : {}}>
                         {v.roi !== 'N/A' ? `${v.roi}%` : 'N/A'}
                       </span>
                     </td>

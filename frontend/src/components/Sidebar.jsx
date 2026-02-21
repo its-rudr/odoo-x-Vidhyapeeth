@@ -60,7 +60,7 @@ export default function Sidebar() {
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">FleetFlow</h1>
-            <p className="text-sm text-slate-500 uppercase tracking-widest">Fleet Management</p>
+            <p className="text-xs text-slate-500 uppercase tracking-widest">Fleet Management</p>
           </div>
         </div>
 
@@ -105,7 +105,7 @@ export default function Sidebar() {
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm rounded-xl transition-all hover:bg-slate-100" style={{ color: '#DD700B' }}
           >
             <LogOut size={16} />
             Sign Out

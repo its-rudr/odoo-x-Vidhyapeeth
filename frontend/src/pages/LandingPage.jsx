@@ -26,11 +26,11 @@ function useInView(threshold = 0.1) {
 /* ───────────────────── data ───────────────────── */
 const features = [
   { icon: BarChart3, title: 'Command Center', desc: 'Real-time KPIs, fleet status charts, and recent activity — all at a glance in a high-density dashboard.', color: '#DD700B' },
-  { icon: Truck, title: 'Vehicle Registry', desc: 'Track every asset — type, plate, status, and mileage — with instant search and modular management.', color: '#2563EB' },
-  { icon: Route, title: 'Trip Dispatch', desc: 'Assign and monitor trips from origin to destination with live updates and smart route optimization.', color: '#7C3AED' },
-  { icon: Wrench, title: 'Maintenance Logs', desc: 'Schedule services and set cost alerts to keep your fleet road-ready and minimize downtime.', color: '#059669' },
-  { icon: Fuel, title: 'Expense Tracker', desc: 'Categorize fuel, tolls, and repair costs with detailed visual spending breakdowns per vehicle.', color: '#DC2626' },
-  { icon: Users, title: 'Driver Profiles', desc: 'Manage licenses, contact info, and assignment history for your entire driver team seamlessly.', color: '#0891B2' },
+  { icon: Truck, title: 'Vehicle Registry', desc: 'Track every asset — type, plate, status, and mileage — with instant search and modular management.', color: '#DD700B' },
+  { icon: Route, title: 'Trip Dispatch', desc: 'Assign and monitor trips from origin to destination with live updates and smart route optimization.', color: '#DD700B' },
+  { icon: Wrench, title: 'Maintenance Logs', desc: 'Schedule services and set cost alerts to keep your fleet road-ready and minimize downtime.', color: '#DD700B' },
+  { icon: Fuel, title: 'Expense Tracker', desc: 'Categorize fuel, tolls, and repair costs with detailed visual spending breakdowns per vehicle.', color: '#DD700B' },
+  { icon: Users, title: 'Driver Profiles', desc: 'Manage licenses, contact info, and assignment history for your entire driver team seamlessly.', color: '#DD700B' },
 ];
 
 const stats = [
@@ -87,7 +87,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white font-bricolage overflow-x-hidden relative text-slate-800">
+    <div className="min-h-screen bg-white overflow-x-hidden relative text-slate-800">
       {/* Visual Texture - Grid Overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #DD700B 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
       

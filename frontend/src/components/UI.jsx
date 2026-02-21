@@ -1,19 +1,19 @@
 export function StatusPill({ status }) {
   const colors = {
-    'Available': 'bg-emerald-100 text-emerald-700 ring-emerald-600/20',
-    'On Trip': 'bg-blue-100 text-blue-700 ring-blue-600/20',
+    'Available': 'bg-orange-100 text-orange-700 ring-orange-600/20',
+    'On Trip': 'bg-orange-100 text-orange-700 ring-orange-600/20',
     'In Shop': 'bg-amber-100 text-amber-700 ring-amber-600/20',
     'Out of Service': 'bg-red-100 text-red-700 ring-red-600/20',
-    'On Duty': 'bg-emerald-100 text-emerald-700 ring-emerald-600/20',
+    'On Duty': 'bg-orange-100 text-orange-700 ring-orange-600/20',
     'Off Duty': 'bg-slate-100 text-slate-600 ring-slate-500/20',
     'Suspended': 'bg-red-100 text-red-700 ring-red-600/20',
     'Draft': 'bg-slate-100 text-slate-600 ring-slate-500/20',
-    'Dispatched': 'bg-blue-100 text-blue-700 ring-blue-600/20',
-    'Completed': 'bg-emerald-100 text-emerald-700 ring-emerald-600/20',
+    'Dispatched': 'bg-orange-100 text-orange-700 ring-orange-600/20',
+    'Completed': 'bg-orange-100 text-orange-700 ring-orange-600/20',
     'Cancelled': 'bg-red-100 text-red-700 ring-red-600/20',
     'Scheduled': 'bg-violet-100 text-violet-700 ring-violet-600/20',
     'In Progress': 'bg-amber-100 text-amber-700 ring-amber-600/20',
-    'Preventive': 'bg-blue-100 text-blue-700 ring-blue-600/20',
+    'Preventive': 'bg-orange-100 text-orange-700 ring-orange-600/20',
     'Reactive': 'bg-orange-100 text-orange-700 ring-orange-600/20',
     'Inspection': 'bg-violet-100 text-violet-700 ring-violet-600/20',
   };
@@ -40,7 +40,7 @@ export function PageHeader({ title, subtitle, children }) {
 export function Card({ children, className = '', noHover }) {
   return (
     <div
-      className={`bg-white rounded-2xl border border-slate-200/60 shadow-sm transition-all duration-300 transform overflow-hidden will-change-transform ${className} ${noHover ? '' : 'hover:shadow-[0_4px_16px_0_rgba(59,130,246,0.38)] hover:border-[#3B82F6] hover:scale-105'}`}
+      className={`bg-white rounded-2xl border border-slate-200/60 shadow-sm transition-all duration-300 transform overflow-hidden will-change-transform ${className} ${noHover ? '' : 'hover:shadow-[0_4px_16px_0_rgba(221,112,11,0.15)] hover:border-[#DD700B] hover:scale-105'}`}
     >
       {children}
     </div>
@@ -50,13 +50,10 @@ export function Card({ children, className = '', noHover }) {
 export function KPICard({ icon: Icon, label, value, sublabel, color = 'orange' }) {
   const colors = {
     orange: { grad: '#DD700B', bg: '#FCF8D8' },
-    blue: { grad: '#3B82F6', bg: '#DBEAFE' },
-    amber: { grad: '#D97706', bg: '#FEF3C7' },
+    slate: { grad: '#7C7D75', bg: '#F1F5F9' },
+    gray: { grad: '#ADACA7', bg: '#E2E8F0' },
+    muted: { grad: '#D9DADF', bg: '#F8FAFC' },
     red: { grad: '#DC2626', bg: '#FEE2E2' },
-    violet: { grad: '#7C3AED', bg: '#EDE9FE' },
-    cyan: { grad: '#0891B2', bg: '#CFFAFE' },
-    emerald: { grad: '#059669', bg: '#D1FAE5' },
-    slate: { grad: '#475569', bg: '#E2E8F0' },
   };
 
   const colorMap = colors[color] || colors.orange;
