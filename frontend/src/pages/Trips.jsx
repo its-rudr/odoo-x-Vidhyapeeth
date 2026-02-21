@@ -60,20 +60,20 @@ export default function Trips() {
   return (
     <div>
       <PageHeader title="Trip Dispatcher" subtitle="Create and manage cargo trips">
-        <button onClick={() => setModal(true)} className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all">
+        <button onClick={() => setModal(true)} className="flex items-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-xl shadow-lg transition-all" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
           <Plus size={16} /> New Trip
         </button>
       </PageHeader>
 
       <div className="flex gap-3 mb-6">
-        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30">
+        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }} onFocus={(e) => { e.style.borderColor = '#DD700B'; }} onBlur={(e) => { e.style.borderColor = '#e2e8f0'; }}>
           <option value="">All Status</option>
           <option>Draft</option><option>Dispatched</option><option>Completed</option><option>Cancelled</option>
         </select>
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 rounded-full animate-spin" style={{ borderColor: '#DD700B', borderTopColor: 'transparent' }} /></div>
       ) : trips.length === 0 ? (
         <Card><EmptyState icon={Route} title="No trips found" description="Create a new trip to dispatch cargo" /></Card>
       ) : (
@@ -87,7 +87,7 @@ export default function Trips() {
                     <span className="text-xs text-slate-400">{new Date(trip.scheduledDate).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center gap-2 text-lg font-semibold text-slate-900">
-                    {trip.origin} <ArrowRight size={18} className="text-emerald-500" /> {trip.destination}
+                    {trip.origin} <ArrowRight size={18} style={{ color: '#DD700B' }} /> {trip.destination}
                   </div>
                   <div className="flex flex-wrap gap-4 mt-2 text-sm text-slate-500">
                     <span>🚛 {trip.vehicle?.name || 'N/A'} ({trip.vehicle?.licensePlate})</span>
@@ -104,7 +104,7 @@ export default function Trips() {
                   )}
                   {trip.status === 'Dispatched' && (
                     <>
-                      <button onClick={() => setCompleteModal(trip._id)} className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 text-xs font-semibold rounded-lg hover:bg-emerald-100 transition">
+                      <button onClick={() => setCompleteModal(trip._id)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition" style={{ backgroundColor: '#FCF8D8', color: '#DD700B' }} onMouseEnter={(e) => { e.style.backgroundColor = 'rgba(252, 248, 216, 0.7)'; }} onMouseLeave={(e) => { e.style.backgroundColor = '#FCF8D8'; }}>
                         <CheckCircle2 size={13} /> Complete
                       </button>
                       <button onClick={() => updateStatus(trip._id, 'Cancelled')} className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-600 text-xs font-semibold rounded-lg hover:bg-red-100 transition">
@@ -165,7 +165,7 @@ export default function Trips() {
             <label className="block text-xs font-semibold text-slate-600 mb-1">Cargo Description</label>
             <input value={form.cargoDescription} onChange={(e) => setForm({ ...form, cargoDescription: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30" placeholder="e.g. Electronics, Furniture" />
           </div>
-          <button type="submit" className="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all text-sm">
+          <button type="submit" className="w-full py-2.5 text-white font-semibold rounded-xl shadow-lg transition-all text-sm" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.style.backgroundColor = '#DD700B'; }}>
             Create Trip
           </button>
         </form>

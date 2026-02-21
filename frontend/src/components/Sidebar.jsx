@@ -32,14 +32,14 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile top bar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-slate-900 flex items-center justify-between px-4 shadow-lg">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 shadow-sm">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center shadow">
+          <div className="w-8 h-8 rounded-lg bg-[#DD700B] flex items-center justify-center shadow">
             <Zap size={16} className="text-white" />
           </div>
-          <span className="text-white font-bold text-sm">FleetFlow</span>
+          <span className="text-slate-900 font-bold text-sm">FleetFlow</span>
         </div>
-        <button onClick={() => setOpen(!open)} className="p-2 text-white hover:bg-slate-700 rounded-lg transition">
+        <button onClick={() => setOpen(!open)} className="p-2 text-slate-600 hover:bg-slate-200 rounded-lg transition">
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
@@ -48,15 +48,15 @@ export default function Sidebar() {
       {open && <div className="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" onClick={() => setOpen(false)} />}
 
       {/* Sidebar */}
-      <aside className={`fixed inset-y-0 left-0 z-40 flex flex-col bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white transition-transform duration-300 ease-in-out w-64 ${open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+      <aside className={`fixed inset-y-0 left-0 z-40 flex flex-col bg-white text-slate-900 border-r border-slate-200 transition-transform duration-300 ease-in-out w-64 ${open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         {/* Logo */}
-        <div className="flex items-center gap-3 px-6 py-5 border-b border-slate-700/50">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/25">
+        <div className="flex items-center gap-3 px-6 py-5 border-b border-slate-200">
+          <div className="w-10 h-10 rounded-xl bg-[#DD700B] flex items-center justify-center shadow-lg shadow-[#DD700B]/25">
             <Zap size={22} className="text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-bold tracking-tight">FleetFlow</h1>
-            <p className="text-[10px] text-slate-400 uppercase tracking-widest">Fleet Management</p>
+            <h1 className="text-lg font-bold tracking-tight text-slate-900">FleetFlow</h1>
+            <p className="text-[10px] text-slate-500 uppercase tracking-widest">Fleet Management</p>
           </div>
         </div>
 
@@ -70,8 +70,8 @@ export default function Sidebar() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group ${
                   isActive
-                    ? 'bg-gradient-to-r from-emerald-500/20 to-cyan-500/10 text-emerald-400 shadow-sm'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                    ? 'bg-[#FCF8D8] text-[#DD700B]'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`
               }
             >
@@ -86,19 +86,19 @@ export default function Sidebar() {
         </nav>
 
         {/* User Info & Logout */}
-        <div className="px-4 py-4 border-t border-slate-700/50">
+        <div className="px-4 py-4 border-t border-slate-200">
           <div className="flex items-center gap-3 mb-3 px-2">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-sm font-bold shadow">
+            <div className="w-9 h-9 rounded-full bg-[#DD700B] flex items-center justify-center text-sm font-bold shadow text-white">
               {user?.name?.charAt(0)?.toUpperCase()}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium truncate">{user?.name}</p>
-              <p className="text-[11px] text-slate-400 capitalize">{user?.role?.replace('_', ' ')}</p>
+              <p className="text-sm font-medium truncate text-slate-900">{user?.name}</p>
+              <p className="text-[11px] text-slate-500 capitalize">{user?.role?.replace('_', ' ')}</p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all"
+            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
           >
             <LogOut size={16} />
             Sign Out

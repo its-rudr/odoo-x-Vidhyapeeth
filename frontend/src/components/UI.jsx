@@ -45,23 +45,17 @@ export function Card({ children, className = '' }) {
   );
 }
 
-export function KPICard({ icon: Icon, label, value, sublabel, color = 'emerald' }) {
-  const gradients = {
-    emerald: 'from-emerald-500 to-teal-600',
-    blue: 'from-blue-500 to-indigo-600',
-    amber: 'from-amber-500 to-orange-600',
-    red: 'from-red-500 to-rose-600',
-    violet: 'from-violet-500 to-purple-600',
-    cyan: 'from-cyan-500 to-blue-600',
+export function KPICard({ icon: Icon, label, value, sublabel, color = 'orange' }) {
+  const colors = {
+    orange: { grad: '#DD700B', bg: '#FCF8D8' },
+    blue: { grad: '#7C7D75', bg: '#D9DADF' },
+    amber: { grad: '#ADACA7', bg: '#D9DADF' },
+    red: { grad: '#DD700B', bg: '#FCF8D8' },
+    violet: { grad: '#DD700B', bg: '#FCF8D8' },
+    cyan: { grad: '#7C7D75', bg: '#D9DADF' },
   };
-  const bgs = {
-    emerald: 'bg-emerald-50',
-    blue: 'bg-blue-50',
-    amber: 'bg-amber-50',
-    red: 'bg-red-50',
-    violet: 'bg-violet-50',
-    cyan: 'bg-cyan-50',
-  };
+
+  const colorMap = colors[color] || colors.orange;
 
   return (
     <Card className="p-5 hover:shadow-md transition-shadow">
@@ -71,8 +65,8 @@ export function KPICard({ icon: Icon, label, value, sublabel, color = 'emerald' 
           <p className="text-3xl font-bold text-slate-900 mt-1">{value}</p>
           {sublabel && <p className="text-xs text-slate-400 mt-1">{sublabel}</p>}
         </div>
-        <div className={`p-3 rounded-xl ${bgs[color]}`}>
-          <Icon size={22} className={`bg-gradient-to-br ${gradients[color]} bg-clip-text text-transparent`} strokeWidth={2} />
+        <div className="p-3 rounded-xl" style={{ backgroundColor: colorMap.bg }}>
+          <Icon size={22} style={{ color: colorMap.grad }} strokeWidth={2} />
         </div>
       </div>
     </Card>
@@ -98,8 +92,8 @@ export function Modal({ open, onClose, title, children }) {
 export function EmptyState({ icon: Icon, title, description }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div className="p-4 rounded-2xl bg-slate-100 mb-4">
-        <Icon size={32} className="text-slate-400" />
+      <div className="p-4 rounded-2xl mb-4" style={{ backgroundColor: '#FCF8D8' }}>
+        <Icon size={32} style={{ color: '#DD700B' }} />
       </div>
       <h3 className="text-lg font-semibold text-slate-700">{title}</h3>
       <p className="text-sm text-slate-400 mt-1 max-w-sm">{description}</p>

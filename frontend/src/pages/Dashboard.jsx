@@ -5,7 +5,7 @@ import { Truck, AlertTriangle, Gauge, Package, CheckCircle2, Users, DollarSign, 
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import toast from 'react-hot-toast';
 
-const PIE_COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444'];
+const PIE_COLORS = ['#DD700B', '#7C7D75', '#FCF8D8', '#ADACA7'];
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
@@ -18,7 +18,7 @@ export default function Dashboard() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="flex items-center justify-center h-96"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center h-96"><div className="w-8 h-8 border-4 rounded-full animate-spin" style={{ borderColor: '#DD700B', borderTopColor: 'transparent' }} /></div>;
 
   const kpis = data?.kpis || {};
   const statusData = data?.statusDistribution
