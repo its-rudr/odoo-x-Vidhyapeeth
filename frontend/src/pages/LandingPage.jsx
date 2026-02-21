@@ -96,7 +96,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
           <div className="flex items-center gap-4 group">
             <div className="w-12 h-12 rounded-2xl bg-white p-2 shadow-xl shadow-black/[0.05] border border-slate-100 flex items-center justify-center group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 cursor-pointer">
-              <img src="/logo.png" alt="FleetFlow" className="w-full h-full object-contain rounded-lg" />
+              <img src="/Logo.png" alt="FleetFlow" className="w-full h-full object-contain rounded-lg" />
             </div>
             <span className="text-2xl font-black text-slate-900 tracking-tighter">FleetFlow</span>
           </div>
@@ -137,7 +137,7 @@ export default function LandingPage() {
           {/* Large Logo Display */}
           <div className="mb-10 opacity-0 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
             <div className="inline-block p-2 rounded-3xl bg-white shadow-2xl border border-slate-100">
-              <img src="/logo.png" alt="FleetFlow Logo" className="w-40 h-40 md:w-34 md:h-34 object-contain" />
+              <img src="/Logo.png" alt="FleetFlow Logo" className="w-40 h-40 md:w-34 md:h-34 object-contain" />
             </div>
           </div>
           
@@ -371,7 +371,7 @@ function Footer() {
           <div className="col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-xl shadow-[#DD700B]/20">
-                <img src="/logo.png" alt="FleetFlow" className="w-full h-full object-contain" />
+                <img src="/Logo.png" alt="FleetFlow" className="w-full h-full object-contain" />
               </div>
               <span className="text-2xl font-black text-slate-900 tracking-tight">FleetFlow</span>
             </div>

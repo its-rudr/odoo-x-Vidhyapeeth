@@ -39,7 +39,7 @@ export default function Sidebar() {
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 shadow-sm">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg shadow">
-            <img src="/logo.png" alt="FleetFlow" className="w-full h-full object-contain" />
+            <img src="/Logo.png" alt="FleetFlow" className="w-full h-full object-contain" />
           </div>
           <span className="text-slate-900 font-bold text-sm">FleetFlow</span>
         </div>
@@ -56,7 +56,7 @@ export default function Sidebar() {
         {/* Logo */}
         <div className="flex items-center gap-3 px-6 py-5 border-b border-slate-200">
           <div className="w-10 h-10 rounded-xl shadow-lg shadow-[#DD700B]/25">
-            <img src="/logo.png" alt="FleetFlow" className="w-full h-full object-contain" />
+            <img src="/Logo.png" alt="FleetFlow" className="w-full h-full object-contain" />
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">FleetFlow</h1>
