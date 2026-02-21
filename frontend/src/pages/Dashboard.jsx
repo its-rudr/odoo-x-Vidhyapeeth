@@ -73,7 +73,15 @@ export default function Dashboard() {
           <option value="">All Statuses</option>
           <option>Available</option><option>On Trip</option><option>In Shop</option><option>Out of Service</option>
         </select>
-        <input type="text" placeholder="Filter by region…" value={filters.region} onChange={(e) => setFilters(f => ({ ...f, region: e.target.value }))} className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 max-w-[180px]" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }} />
+        <select value={filters.region} onChange={(e) => setFilters(f => ({ ...f, region: e.target.value }))} className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }}>
+          <option value="">All Regions</option>
+          <option value="North">North</option>
+          <option value="South">South</option>
+          <option value="East">East</option>
+          <option value="West">West</option>
+          <option value="Central">Central</option>
+          <option value="Default">Default</option>
+        </select>
         {(filters.type || filters.status || filters.region) && (
           <button onClick={() => setFilters({ type: '', status: '', region: '' })} className="px-3 py-2 text-xs font-semibold text-red-500 bg-red-50 hover:bg-red-100 rounded-xl transition">Clear</button>
         )}
