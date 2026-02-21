@@ -40,11 +40,7 @@ export function PageHeader({ title, subtitle, children }) {
 export function Card({ children, className = '', noHover }) {
   return (
     <div
-<<<<<<< Updated upstream
       className={`bg-white rounded-2xl border border-slate-200/60 shadow-sm transition-all duration-300 transform overflow-hidden will-change-transform ${className} ${noHover ? '' : 'hover:shadow-[0_4px_16px_0_rgba(221,112,11,0.15)] hover:border-[#DD700B] hover:scale-105'}`}
-=======
-      className={`bg-white rounded-2xl border border-slate-200/60 shadow-sm transition-all duration-300 transform overflow-hidden will-change-transform ${className} ${noHover ? '' : 'hover:shadow-[0_8px_32px_0_rgba(59,130,246,0.65)] hover:border-[#2563EB] hover:scale-105'}`}
->>>>>>> Stashed changes
     >
       {children}
     </div>
