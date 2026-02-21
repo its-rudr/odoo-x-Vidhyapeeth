@@ -2,7 +2,7 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { hasPermission, getRoleLabel, ROUTE_MODULE_MAP } from '../config/rolePermissions';
 import {
-  LayoutDashboard, Truck, Route, Wrench, Fuel, Users, BarChart3, LogOut, Menu, X, Zap, ChevronRight, Shield
+  LayoutDashboard, Truck, Route, Wrench, Fuel, Users, BarChart3, LogOut, Menu, X, ChevronRight, Shield
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -38,8 +38,8 @@ export default function Sidebar() {
       {/* Mobile top bar */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 shadow-sm">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-[#DD700B] flex items-center justify-center shadow">
-            <Zap size={16} className="text-white" />
+          <div className="w-8 h-8 rounded-lg shadow">
+            <img src="/logo.png" alt="FleetFlow" className="w-full h-full object-contain" />
           </div>
           <span className="text-slate-900 font-bold text-sm">FleetFlow</span>
         </div>
@@ -55,8 +55,8 @@ export default function Sidebar() {
       <aside className={`fixed inset-y-0 left-0 z-40 flex flex-col bg-white text-slate-900 border-r border-slate-200 transition-transform duration-300 ease-in-out w-64 ${open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         {/* Logo */}
         <div className="flex items-center gap-3 px-6 py-5 border-b border-slate-200">
-          <div className="w-10 h-10 rounded-xl bg-[#DD700B] flex items-center justify-center shadow-lg shadow-[#DD700B]/25">
-            <Zap size={22} className="text-white" />
+          <div className="w-10 h-10 rounded-xl shadow-lg shadow-[#DD700B]/25">
+            <img src="/logo.png" alt="FleetFlow" className="w-full h-full object-contain" />
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">FleetFlow</h1>

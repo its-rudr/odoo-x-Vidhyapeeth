@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, Zap, ArrowRight, Shield, ShieldAlert, HardHat, Banknote } from 'lucide-react';
+import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const roles = [
@@ -85,22 +85,11 @@ export default function Login() {
         </div>
       </div>
 
-      {/* ──────── Right Pane: Form ──────── */}
-      <div className="flex-1 h-full flex items-center justify-center p-4 md:p-8 bg-white md:bg-transparent overflow-y-auto no-scrollbar">
-        <div className="w-full max-w-[420px] flex flex-col justify-center py-2">
-          <div className="mb-6">
-            <div className="md:hidden flex items-center gap-4 mb-4">
-              <div className="w-11 h-11 rounded-xl bg-white p-1.5 shadow-lg border border-slate-100 flex items-center justify-center">
-                <img src="/Images/FleetFlow.webp" alt="FleetFlow" className="w-full h-full object-contain rounded-md" />
-              </div>
-              <span className="text-2xl font-black text-slate-900 tracking-tight">FleetFlow</span>
-            </div>
-            <h2 className="font-black text-slate-900 tracking-tight leading-none text-4xl mb-2">
-              Welcome Back
-            </h2>
-            <p className="text-slate-500 font-medium text-sm">
-              Select your operational role and sign in.
-            </p>
+      <div className="relative w-full max-w-md">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl shadow-lg mb-4">
+            <img src="/logo.png" alt="FleetFlow" className="w-16 h-16 object-contain" />
           </div>
 
           {/* Role Selection Grid */}
