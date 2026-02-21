@@ -103,14 +103,14 @@ export default function LandingPage() {
           <div className="hidden md:flex items-center gap-10 text-base font-black text-slate-700">
             <button 
               onClick={() => scrollTo('features')} 
-              className={`transition relative group uppercase tracking-widest text-[11px] ${activeSection === 'features' ? 'text-[#DD700B]' : 'hover:text-[#DD700B]'}`}
+              className={`transition relative group uppercase tracking-widest text-sm ${activeSection === 'features' ? 'text-[#DD700B]' : 'hover:text-[#DD700B]'}`}
             >
               Features
               <span className={`absolute -bottom-2 left-0 h-1 bg-[#DD700B] transition-all rounded-full ${activeSection === 'features' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
             </button>
             <button 
               onClick={() => scrollTo('how-it-works')} 
-              className={`transition relative group uppercase tracking-widest text-[11px] ${activeSection === 'how-it-works' ? 'text-[#DD700B]' : 'hover:text-[#DD700B]'}`}
+              className={`transition relative group uppercase tracking-widest text-sm ${activeSection === 'how-it-works' ? 'text-[#DD700B]' : 'hover:text-[#DD700B]'}`}
             >
               How It Works
               <span className={`absolute -bottom-2 left-0 h-1 bg-[#DD700B] transition-all rounded-full ${activeSection === 'how-it-works' ? 'w-full' : 'w-0 group-hover:w-full'}`} />

@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        sans: ['Bricolage Grotesque', 'system-ui', 'sans-serif'],
         bricolage: ['Bricolage Grotesque', 'sans-serif'],
       },
       colors: {

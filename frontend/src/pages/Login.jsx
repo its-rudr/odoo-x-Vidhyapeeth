@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Zap, Mail, Lock, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, Zap, ArrowRight, Shield, ShieldAlert, HardHat, Banknote } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+const roles = [
+  { id: 'manager', label: 'Fleet Manager', icon: Shield, color: '#DD700B' },
+  { id: 'dispatcher', label: 'Dispatcher', icon: ShieldAlert, color: '#2563EB' },
+  { id: 'safety', label: 'Safety Officer', icon: HardHat, color: '#059669' },
+  { id: 'finance', label: 'Finance Analyst', icon: Banknote, color: '#7C3AED' },
+];
+
 export default function Login() {
+  const [role, setRole] = useState('');
   const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [scrolled, setScrolled] = useState(false);
-
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   const validate = () => {
     const errs = {};
@@ -30,11 +30,12 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!role) { toast.error('Please select a role first'); return; }
     if (!validate()) return;
     setLoading(true);
     try {
       await login(form.email, form.password);
-      toast.success('Welcome back!');
+      toast.success(`Welcome back, ${roles.find(r => r.id === role)?.label || 'User'}!`);
       navigate('/dashboard', { replace: true });
     } catch (err) {
       toast.error(err.response?.data?.message || 'Invalid credentials');
@@ -44,95 +45,147 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4 pt-28 relative overflow-hidden">
-      {/* ──────── Navbar ──────── */}
-      <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 border-b ${scrolled ? 'bg-white/95 backdrop-blur-2xl shadow-xl shadow-black/[.05] border-slate-300/70' : 'bg-white/80 backdrop-blur-md border-slate-200/40'}`}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
-          <div className="flex items-center gap-4 group cursor-pointer" onClick={() => navigate('/')}>
-            <div className="w-12 h-12 rounded-2xl bg-white p-2 shadow-xl shadow-black/[0.05] border border-slate-100 flex items-center justify-center group-hover:rotate-6 group-hover:scale-110 transition-all duration-500">
+    <div className="h-screen bg-slate-50 flex flex-col md:flex-row relative overflow-hidden">
+      {/* ──────── Left Pane: Immersive Image ──────── */}
+      <div className="hidden md:flex md:w-1/2 lg:w-[55%] h-full relative overflow-hidden bg-slate-900">
+        <div className="absolute inset-0 z-0 opacity-60" 
+             style={{ 
+               backgroundImage: 'url("/Images/truck.webp")',
+               backgroundSize: 'cover',
+               backgroundPosition: 'center',
+               backgroundRepeat: 'no-repeat',
+               filter: 'brightness(0.7)'
+             }} />
+        <div className="absolute inset-0 z-10 bg-black/20" />
+        
+        <div className="relative z-20 w-full h-full p-12 lg:p-16 flex flex-col justify-between">
+          <div className="flex items-center gap-4 cursor-pointer" onClick={() => navigate('/')}>
+            <div className="w-14 h-14 rounded-2xl bg-white p-2 shadow-xl shadow-black/20 flex items-center justify-center">
               <img src="/Images/FleetFlow.webp" alt="FleetFlow" className="w-full h-full object-contain rounded-lg" />
             </div>
-            <span className="text-2xl font-black text-slate-900 tracking-tighter">FleetFlow</span>
+            <span className="text-3xl font-black text-white tracking-tighter">FleetFlow</span>
           </div>
-          <div className="flex items-center gap-6">
-            <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-[#DD700B] transition uppercase tracking-widest">
-              <ArrowLeft size={16} /> Back to Home
-            </button>
+
+          <div className="max-w-xl animate-fade-in-up">
+            <div className="w-14 h-1.5 bg-[#DD700B] mb-6 rounded-full" />
+            <h1 className="text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tighter mb-4">
+              The Hub of <br/> 
+              <span className="text-[#DD700B]">Modern Logistics.</span>
+            </h1>
+            <p className="text-slate-300 text-lg lg:text-xl font-medium leading-tight mb-8 opacity-80">
+              Secure, real-time fleet management. Powered by intelligent insights and built for professional-scale performance.
+            </p>
+            
+            <div className="flex items-center gap-8 pt-8 border-t border-white/10 text-white/40 text-[11px] font-black uppercase tracking-[0.3em]">
+              <span>Next-Gen Architecture</span>
+              <span>•</span>
+              <span>Built for Scale 2026</span>
+            </div>
           </div>
         </div>
-      </nav>
-
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'rgba(221, 112, 11, 0.05)' }} />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'rgba(252, 248, 216, 0.1)' }} />
       </div>
 
-      <div className="relative w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl shadow-lg mb-4" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.2)' }}>
-            <Zap size={32} className="text-white" />
+      {/* ──────── Right Pane: Form ──────── */}
+      <div className="flex-1 h-full flex items-center justify-center p-4 md:p-8 bg-white md:bg-transparent overflow-y-auto no-scrollbar">
+        <div className="w-full max-w-[420px] flex flex-col justify-center py-2">
+          <div className="mb-6">
+            <div className="md:hidden flex items-center gap-4 mb-4">
+              <div className="w-11 h-11 rounded-xl bg-white p-1.5 shadow-lg border border-slate-100 flex items-center justify-center">
+                <img src="/Images/FleetFlow.webp" alt="FleetFlow" className="w-full h-full object-contain rounded-md" />
+              </div>
+              <span className="text-2xl font-black text-slate-900 tracking-tight">FleetFlow</span>
+            </div>
+            <h2 className="font-black text-slate-900 tracking-tight leading-none text-4xl mb-2">
+              Welcome Back
+            </h2>
+            <p className="text-slate-500 font-medium text-sm">
+              Select your operational role and sign in.
+            </p>
           </div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">FleetFlow</h1>
-          <p className="text-slate-500 mt-1 text-sm">Modular Fleet & Logistics Management</p>
-        </div>
 
-        {/* Card */}
-        <div className="bg-white border rounded-3xl p-8 shadow-xl" style={{ borderColor: '#D9DADF' }}>
-          <h2 className="text-xl font-bold text-slate-900 mb-1">Welcome Back</h2>
-          <p className="text-sm text-slate-500 mb-6">Sign in to your account</p>
+          {/* Role Selection Grid */}
+          <div className="grid grid-cols-2 gap-3 mb-8">
+            {roles.map((r) => (
+              <button
+                key={r.id}
+                type="button"
+                onClick={() => { setRole(r.id); setErrors({}); }}
+                className={`relative flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all duration-300 ${
+                  role === r.id 
+                    ? 'border-[#DD700B] bg-[#DD700B]/5 shadow-lg scale-[1.02]' 
+                    : 'border-slate-100 bg-white hover:border-slate-200'
+                }`}
+              >
+                <div 
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2 transition-transform duration-500 ${role === r.id ? 'scale-110' : ''}`}
+                  style={{ backgroundColor: `${r.color}15`, color: r.color }}
+                >
+                  <r.icon size={20} className={role === r.id ? 'animate-pulse' : ''} />
+                </div>
+                <span className={`text-[11px] font-black uppercase tracking-wider transition-colors ${role === r.id ? 'text-[#DD700B]' : 'text-slate-500'}`}>
+                  {r.label}
+                </span>
+                {role === r.id && (
+                  <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[#DD700B]" />
+                )}
+              </button>
+            ))}
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="relative">
-              <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <div className="group relative">
+              <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#DD700B] transition-colors" />
               <input
                 type="email"
                 placeholder="Email Address"
                 value={form.email}
                 onChange={(e) => { setForm({ ...form, email: e.target.value }); setErrors(prev => ({ ...prev, email: '' })); }}
+                className={`w-full pl-11 pr-5 py-3.5 bg-white border-2 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-[#DD700B]/5 transition-all text-sm font-medium ${errors.email ? 'border-red-400' : 'border-slate-200 focus:border-[#DD700B]'}`}
                 required
-                className="w-full pl-10 pr-4 py-3 border rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 transition text-sm"
-                style={{ borderColor: errors.email ? '#EF4444' : '#D9DADF', '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }}
-                onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }}
-                onBlur={(e) => { e.target.style.borderColor = errors.email ? '#EF4444' : '#D9DADF'; }}
               />
-              {errors.email && <p className="text-xs text-red-400 mt-1 ml-1">{errors.email}</p>}
+              {errors.email && <p className="text-[10px] text-red-500 mt-1 ml-1 font-bold italic">{errors.email}</p>}
             </div>
 
-            <div className="relative">
-              <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <div className="group relative">
+              <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#DD700B] transition-colors" />
               <input
                 type="password"
                 placeholder="Password"
                 value={form.password}
                 onChange={(e) => { setForm({ ...form, password: e.target.value }); setErrors(prev => ({ ...prev, password: '' })); }}
+                className={`w-full pl-11 pr-5 py-3.5 bg-white border-2 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-[#DD700B]/5 transition-all text-sm font-medium ${errors.password ? 'border-red-400' : 'border-slate-200 focus:border-[#DD700B]'}`}
                 required
                 minLength={8}
-                className="w-full pl-10 pr-4 py-3 border rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 transition text-sm"
-                style={{ borderColor: errors.password ? '#EF4444' : '#D9DADF', '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }}
-                onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }}
-                onBlur={(e) => { e.target.style.borderColor = errors.password ? '#EF4444' : '#D9DADF'; }}
               />
-              {errors.password && <p className="text-xs text-red-400 mt-1 ml-1">{errors.password}</p>}
+              {errors.password && <p className="text-[10px] text-red-500 mt-1 ml-1 font-bold italic">{errors.password}</p>}
+            </div>
+
+            <div className="flex items-center justify-between pb-1">
+              <label className="flex items-center gap-2 cursor-pointer group">
+                <input type="checkbox" className="w-4 h-4 rounded border-slate-200 text-[#DD700B] focus:ring-[#DD700B]/20" />
+                <span className="text-[12px] text-slate-500 font-medium group-hover:text-slate-700 transition-colors">Remember me</span>
+              </label>
+              <button type="button" className="text-[12px] font-bold text-[#DD700B] hover:text-[#DD700B]/80 transition-colors">Forgot Password?</button>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 text-white font-semibold rounded-xl shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-              style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }}
-              onMouseEnter={(e) => { if (!loading) e.target.style.backgroundColor = '#C25C07'; }}
-              onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}
+              className="w-full group flex items-center justify-center gap-3 py-4 text-white font-black rounded-xl shadow-xl shadow-[#DD700B]/20 transition-all hover:scale-[1.01] active:scale-[0.99] text-sm"
+              style={{ backgroundColor: '#DD700B' }}
             >
-              {loading ? 'Please wait...' : 'Sign In'}
+              {loading ? 'Authenticating...' : (
+                <>
+                  Secure Sign In <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-xs text-slate-400">Contact your administrator for account access</p>
+          <p className="mt-6 text-center text-slate-400 text-[10px] font-medium uppercase tracking-widest opacity-60">
+            Enterprise Security Core
+          </p>
         </div>
-
-        <p className="text-center text-xs text-slate-400 mt-6">FleetFlow &copy; 2026 &mdash; Hackathon Project</p>
       </div>
     </div>
   );
