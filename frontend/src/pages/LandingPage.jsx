@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import {
-  Zap, Truck, Route, Wrench, Fuel, Users, BarChart3,
+  Truck, Route, Wrench, Fuel, Users, BarChart3,
   ArrowRight, CheckCircle, Star, Shield, Clock, TrendingUp,
   ChevronRight, Globe, Phone, Mail, MapPin
 } from 'lucide-react';
@@ -96,7 +96,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
           <div className="flex items-center gap-4 group">
             <div className="w-12 h-12 rounded-2xl bg-white p-2 shadow-xl shadow-black/[0.05] border border-slate-100 flex items-center justify-center group-hover:rotate-6 group-hover:scale-110 transition-all duration-500 cursor-pointer">
-              <img src="/Images/FleetFlow.webp" alt="FleetFlow" className="w-full h-full object-contain rounded-lg" />
+              <img src="/logo.png" alt="FleetFlow" className="w-full h-full object-contain rounded-lg" />
             </div>
             <span className="text-2xl font-black text-slate-900 tracking-tighter">FleetFlow</span>
           </div>
@@ -133,9 +133,16 @@ export default function LandingPage() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[300px] opacity-[0.03]" style={{ background: 'radial-gradient(circle, #DD700B 0%, transparent 70%)' }} />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto text-center px-6 pt-32 pb-16">
+        <div className="relative z-10 max-w-5xl mx-auto text-center px-6 pt-20 pb-16">
+          {/* Large Logo Display */}
+          <div className="mb-10 opacity-0 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
+            <div className="inline-block p-2 rounded-3xl bg-white shadow-2xl border border-slate-100">
+              <img src="/logo.png" alt="FleetFlow Logo" className="w-40 h-40 md:w-34 md:h-34 object-contain" />
+            </div>
+          </div>
+          
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8 text-xs font-bold uppercase tracking-[0.2em] opacity-0 animate-fade-in-up shadow-sm" style={{ borderColor: 'rgba(221,112,11,.3)', backgroundColor: 'rgba(252,248,216,.5)', color: '#DD700B' }}>
-            <Zap size={14} className="animate-float" /> Next-Generation Logistics — Built for Performance
+            <BarChart3 size={14} className="animate-float" /> Next-Generation Logistics — Built for Performance
           </div>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tighter leading-[0.95] mb-6 opacity-0 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
@@ -363,8 +370,8 @@ function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#DD700B] shadow-xl shadow-[#DD700B]/20">
-                <Zap size={22} className="text-white" />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-xl shadow-[#DD700B]/20">
+                <img src="/logo.png" alt="FleetFlow" className="w-full h-full object-contain" />
               </div>
               <span className="text-2xl font-black text-slate-900 tracking-tight">FleetFlow</span>
             </div>

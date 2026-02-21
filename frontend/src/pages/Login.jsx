@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Zap, Mail, Lock, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function Login() {
@@ -71,8 +71,8 @@ export default function Login() {
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl shadow-lg mb-4" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.2)' }}>
-            <Zap size={32} className="text-white" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl shadow-lg mb-4">
+            <img src="/logo.png" alt="FleetFlow" className="w-16 h-16 object-contain" />
           </div>
           <h1 className="text-3xl font-bold text-slate-900 tracking-tight">FleetFlow</h1>
           <p className="text-slate-500 mt-1 text-sm">Modular Fleet & Logistics Management</p>
