@@ -59,6 +59,7 @@ export default function MaintenanceLogs() {
     catch { toast.error('Failed to delete'); }
   };
 
+  const isSafetyOfficer = user?.role === 'safety_officer';
   return (
     <div>
       <PageHeader title="Maintenance & Service Logs" subtitle="Track preventative and reactive vehicle maintenance">
@@ -70,9 +71,9 @@ export default function MaintenanceLogs() {
       {loading ? (
         <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 rounded-full animate-spin" style={{ borderColor: '#DD700B', borderTopColor: 'transparent' }} /></div>
       ) : logs.length === 0 ? (
-        <Card><EmptyState icon={Wrench} title="No maintenance logs" description="Create your first service log" /></Card>
+        <Card noHover={isSafetyOfficer}><EmptyState icon={Wrench} title="No maintenance logs" description="Create your first service log" /></Card>
       ) : (
-        <Card className="overflow-hidden">
+        <Card className="overflow-hidden" noHover={isSafetyOfficer}>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
