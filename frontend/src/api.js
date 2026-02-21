@@ -19,7 +19,7 @@ API.interceptors.response.use(
       if (!url.includes('/auth/login') && !url.includes('/auth/register')) {
         localStorage.removeItem('fleetflow_token');
         localStorage.removeItem('fleetflow_user');
-        window.location.href = '/login';
+        window.location.href = '/landing';
       }
     }
     return Promise.reject(err);
