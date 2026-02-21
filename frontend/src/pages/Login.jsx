@@ -51,7 +51,7 @@ export default function Login() {
       <div className="hidden md:flex md:w-1/2 lg:w-[55%] h-full relative overflow-hidden bg-slate-900">
         <div className="absolute inset-0 z-0 opacity-60" 
              style={{ 
-               backgroundImage: 'url("/Images/truck.webp")',
+               backgroundImage: 'url("/Images/analysis.jpg")',
                backgroundSize: 'cover',
                backgroundPosition: 'center',
                backgroundRepeat: 'no-repeat',
