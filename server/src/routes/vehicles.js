@@ -4,11 +4,11 @@ const { auth, authorize } = require('../middleware/auth');
 const { validate, validateVehicle } = require('../middleware/validate');
 const router = express.Router();
 
-// Get all vehicles with optional filters (user-scoped)
+// Get all vehicles with optional filters (org-shared)
 router.get('/', auth, async (req, res) => {
   try {
     const { type, status, region, search } = req.query;
-    const filter = { createdBy: req.user._id };
+    const filter = {};
     if (type) filter.type = type;
     if (status) filter.status = status;
     if (region) filter.region = region;
@@ -23,10 +23,10 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// Get single vehicle (user-scoped)
+// Get single vehicle
 router.get('/:id', auth, async (req, res) => {
   try {
-    const vehicle = await Vehicle.findOne({ _id: req.params.id, createdBy: req.user._id });
+    const vehicle = await Vehicle.findById(req.params.id);
     if (!vehicle) return res.status(404).json({ message: 'Vehicle not found.' });
     res.json(vehicle);
   } catch (error) {

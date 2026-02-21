@@ -4,11 +4,11 @@ const { auth, authorize } = require('../middleware/auth');
 const { validate, validateDriver } = require('../middleware/validate');
 const router = express.Router();
 
-// Get all drivers (user-scoped)
+// Get all drivers (org-shared)
 router.get('/', auth, async (req, res) => {
   try {
     const { status, search } = req.query;
-    const filter = { createdBy: req.user._id };
+    const filter = {};
     if (status) filter.status = status;
     if (search) filter.$or = [
       { name: { $regex: search, $options: 'i' } },
@@ -21,10 +21,10 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// Get single driver (user-scoped)
+// Get single driver
 router.get('/:id', auth, async (req, res) => {
   try {
-    const driver = await Driver.findOne({ _id: req.params.id, createdBy: req.user._id });
+    const driver = await Driver.findById(req.params.id);
     if (!driver) return res.status(404).json({ message: 'Driver not found.' });
     res.json(driver);
   } catch (error) {

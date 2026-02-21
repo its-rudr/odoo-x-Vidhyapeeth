@@ -72,7 +72,7 @@ export default function Trips() {
       </PageHeader>
 
       <div className="flex gap-3 mb-6">
-        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }} onFocus={(e) => { e.style.borderColor = '#DD700B'; }} onBlur={(e) => { e.style.borderColor = '#e2e8f0'; }}>
+        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }} onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }} onBlur={(e) => { e.target.style.borderColor = '#e2e8f0'; }}>
           <option value="">All Status</option>
           <option>Draft</option><option>Dispatched</option><option>Completed</option><option>Cancelled</option>
         </select>
@@ -110,7 +110,7 @@ export default function Trips() {
                   )}
                   {canEdit && trip.status === 'Dispatched' && (
                     <>
-                      <button onClick={() => setCompleteModal(trip._id)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition" style={{ backgroundColor: '#FCF8D8', color: '#DD700B' }} onMouseEnter={(e) => { e.style.backgroundColor = 'rgba(252, 248, 216, 0.7)'; }} onMouseLeave={(e) => { e.style.backgroundColor = '#FCF8D8'; }}>
+                      <button onClick={() => setCompleteModal(trip._id)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition" style={{ backgroundColor: '#FCF8D8', color: '#DD700B' }} onMouseEnter={(e) => { e.target.style.backgroundColor = 'rgba(252, 248, 216, 0.7)'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#FCF8D8'; }}>
                         <CheckCircle2 size={13} /> Complete
                       </button>
                       <button onClick={() => updateStatus(trip._id, 'Cancelled')} className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-600 text-xs font-semibold rounded-lg hover:bg-red-100 transition">
@@ -171,7 +171,7 @@ export default function Trips() {
             <label className="block text-xs font-semibold text-slate-600 mb-1">Cargo Description</label>
             <input value={form.cargoDescription} onChange={(e) => setForm({ ...form, cargoDescription: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30" placeholder="e.g. Electronics, Furniture" />
           </div>
-          <button type="submit" className="w-full py-2.5 text-white font-semibold rounded-xl shadow-lg transition-all text-sm" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.style.backgroundColor = '#DD700B'; }}>
+          <button type="submit" className="w-full py-2.5 text-white font-semibold rounded-xl shadow-lg transition-all text-sm" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
             Create Trip
           </button>
         </form>

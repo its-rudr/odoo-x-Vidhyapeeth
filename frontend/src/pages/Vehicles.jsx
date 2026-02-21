@@ -81,13 +81,13 @@ export default function Vehicles() {
       <div className="flex flex-wrap gap-3 mb-6">
         <div className="relative flex-1 min-w-[200px]">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input type="text" placeholder="Search name or plate..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }} onFocus={(e) => { e.style.borderColor = '#DD700B'; }} onBlur={(e) => { e.style.borderColor = '#e2e8f0'; }} />
+          <input type="text" placeholder="Search name or plate..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }} onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }} onBlur={(e) => { e.target.style.borderColor = '#e2e8f0'; }} />
         </div>
-        <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }} onFocus={(e) => { e.style.borderColor = '#DD700B'; }} onBlur={(e) => { e.style.borderColor = '#e2e8f0'; }}>
+        <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }} onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }} onBlur={(e) => { e.target.style.borderColor = '#e2e8f0'; }}>
           <option value="">All Types</option>
           <option>Truck</option><option>Van</option><option>Bike</option>
         </select>
-        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }} onFocus={(e) => { e.style.borderColor = '#DD700B'; }} onBlur={(e) => { e.style.borderColor = '#e2e8f0'; }}>
+        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }} onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }} onBlur={(e) => { e.target.style.borderColor = '#e2e8f0'; }}>
           <option value="">All Status</option>
           <option>Available</option><option>On Trip</option><option>In Shop</option><option>Out of Service</option>
         </select>
@@ -182,7 +182,7 @@ export default function Vehicles() {
             <label className="block text-xs font-semibold text-slate-600 mb-1">Region</label>
             <input value={form.region} onChange={(e) => setForm({ ...form, region: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30" />
           </div>
-          <button type="submit" className="w-full py-2.5 text-white font-semibold rounded-xl shadow-lg transition-all text-sm" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.style.backgroundColor = '#DD700B'; }}>
+          <button type="submit" className="w-full py-2.5 text-white font-semibold rounded-xl shadow-lg transition-all text-sm" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.target.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}>
             {editing ? 'Update Vehicle' : 'Add Vehicle'}
           </button>
         </form>

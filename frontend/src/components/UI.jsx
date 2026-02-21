@@ -48,11 +48,13 @@ export function Card({ children, className = '' }) {
 export function KPICard({ icon: Icon, label, value, sublabel, color = 'orange' }) {
   const colors = {
     orange: { grad: '#DD700B', bg: '#FCF8D8' },
-    blue: { grad: '#7C7D75', bg: '#D9DADF' },
-    amber: { grad: '#ADACA7', bg: '#D9DADF' },
-    red: { grad: '#DD700B', bg: '#FCF8D8' },
-    violet: { grad: '#DD700B', bg: '#FCF8D8' },
-    cyan: { grad: '#7C7D75', bg: '#D9DADF' },
+    blue: { grad: '#3B82F6', bg: '#DBEAFE' },
+    amber: { grad: '#D97706', bg: '#FEF3C7' },
+    red: { grad: '#DC2626', bg: '#FEE2E2' },
+    violet: { grad: '#7C3AED', bg: '#EDE9FE' },
+    cyan: { grad: '#0891B2', bg: '#CFFAFE' },
+    emerald: { grad: '#059669', bg: '#D1FAE5' },
+    slate: { grad: '#475569', bg: '#E2E8F0' },
   };
 
   const colorMap = colors[color] || colors.orange;

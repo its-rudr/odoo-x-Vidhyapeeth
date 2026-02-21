@@ -134,8 +134,8 @@ export default function Login() {
                   onChange={(e) => setForm({ ...form, role: e.target.value })}
                   className="w-full pl-10 pr-4 py-3 border rounded-xl text-slate-900 focus:outline-none focus:ring-2 transition text-sm appearance-none"
                   style={{ borderColor: '#D9DADF', '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }}
-                  onFocus={(e) => { e.style.borderColor = '#DD700B'; }}
-                  onBlur={(e) => { e.style.borderColor = '#D9DADF'; }}
+                  onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }}
+                  onBlur={(e) => { e.target.style.borderColor = '#D9DADF'; }}
                 >
                   <option value="manager" className="bg-white text-slate-900">Fleet Manager</option>
                   <option value="dispatcher" className="bg-white text-slate-900">Dispatcher</option>

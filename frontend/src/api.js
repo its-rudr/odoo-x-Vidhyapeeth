@@ -64,7 +64,7 @@ export const updateExpenseAPI = (id, data) => API.put(`/expenses/${id}`, data);
 export const deleteExpenseAPI = (id) => API.delete(`/expenses/${id}`);
 
 // Analytics
-export const getDashboardAPI = () => API.get('/analytics/dashboard');
+export const getDashboardAPI = (params) => API.get('/analytics/dashboard', { params });
 export const getAnalyticsAPI = () => API.get('/analytics/analytics');
 
 export default API;

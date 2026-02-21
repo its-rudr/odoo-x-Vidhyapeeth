@@ -5,11 +5,11 @@ const { auth, authorize } = require('../middleware/auth');
 const { validate, validateMaintenance } = require('../middleware/validate');
 const router = express.Router();
 
-// Get all maintenance logs (user-scoped)
+// Get all maintenance logs (org-shared)
 router.get('/', auth, async (req, res) => {
   try {
     const { status, vehicleId } = req.query;
-    const filter = { createdBy: req.user._id };
+    const filter = {};
     if (status) filter.status = status;
     if (vehicleId) filter.vehicle = vehicleId;
     const logs = await Maintenance.find(filter)
@@ -24,7 +24,7 @@ router.get('/', auth, async (req, res) => {
 // Create maintenance log (manager, safety_officer only)
 router.post('/', auth, authorize('manager', 'safety_officer'), validate(validateMaintenance), async (req, res) => {
   try {
-    const vehicle = await Vehicle.findOne({ _id: req.body.vehicle, createdBy: req.user._id });
+    const vehicle = await Vehicle.findById(req.body.vehicle);
     if (!vehicle) return res.status(404).json({ message: 'Vehicle not found.' });
 
     // Auto-set vehicle to "In Shop"

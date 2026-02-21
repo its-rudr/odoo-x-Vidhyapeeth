@@ -6,11 +6,11 @@ const { auth, authorize } = require('../middleware/auth');
 const { validate, validateTrip } = require('../middleware/validate');
 const router = express.Router();
 
-// Get all trips (user-scoped)
+// Get all trips (org-shared)
 router.get('/', auth, async (req, res) => {
   try {
     const { status } = req.query;
-    const filter = { createdBy: req.user._id };
+    const filter = {};
     if (status) filter.status = status;
     const trips = await Trip.find(filter)
       .populate('vehicle', 'name licensePlate type maxCapacity')
@@ -27,14 +27,14 @@ router.post('/', auth, authorize('manager', 'dispatcher'), validate(validateTrip
   try {
     const { vehicle: vehicleId, driver: driverId, cargoWeight } = req.body;
 
-    const vehicle = await Vehicle.findOne({ _id: vehicleId, createdBy: req.user._id });
+    const vehicle = await Vehicle.findById(vehicleId);
     if (!vehicle) return res.status(404).json({ message: 'Vehicle not found.' });
     if (vehicle.status !== 'Available') return res.status(400).json({ message: `Vehicle is currently "${vehicle.status}" and cannot be assigned.` });
     if (cargoWeight > vehicle.maxCapacity) {
       return res.status(400).json({ message: `Cargo weight (${cargoWeight}kg) exceeds vehicle capacity (${vehicle.maxCapacity}kg).` });
     }
 
-    const driver = await Driver.findOne({ _id: driverId, createdBy: req.user._id });
+    const driver = await Driver.findById(driverId);
     if (!driver) return res.status(404).json({ message: 'Driver not found.' });
     if (driver.status === 'On Trip') return res.status(400).json({ message: 'Driver is already on a trip.' });
     if (driver.status === 'Suspended') return res.status(400).json({ message: 'Driver is suspended.' });

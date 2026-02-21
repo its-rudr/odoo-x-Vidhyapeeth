@@ -4,11 +4,11 @@ const { auth, authorize } = require('../middleware/auth');
 const { validate, validateExpense } = require('../middleware/validate');
 const router = express.Router();
 
-// Get all expenses (user-scoped)
+// Get all expenses (org-shared)
 router.get('/', auth, async (req, res) => {
   try {
     const { category, vehicleId } = req.query;
-    const filter = { createdBy: req.user._id };
+    const filter = {};
     if (category) filter.category = category;
     if (vehicleId) filter.vehicle = vehicleId;
     const expenses = await Expense.find(filter)
