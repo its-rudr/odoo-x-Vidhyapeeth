@@ -83,7 +83,7 @@ export default function MaintenanceLogs() {
                   <th className="px-5 py-3">Cost</th>
                   <th className="px-5 py-3">Date</th>
                   <th className="px-5 py-3">Status</th>
-                  <th className="px-5 py-3 text-right">Actions</th>
+                  {(canEdit || canDelete) && <th className="px-5 py-3 text-right">Actions</th>}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -95,7 +95,7 @@ export default function MaintenanceLogs() {
                     <td className="px-5 py-3.5 text-slate-700 font-medium">₹{log.cost.toLocaleString()}</td>
                     <td className="px-5 py-3.5 text-slate-500">{new Date(log.scheduledDate).toLocaleDateString()}</td>
                     <td className="px-5 py-3.5"><StatusPill status={log.status} /></td>
-                    <td className="px-5 py-3.5">
+                    {(canEdit || canDelete) && <td className="px-5 py-3.5">
                       <div className="flex items-center justify-end gap-1">
                         {canEdit && log.status === 'Scheduled' && (
                           <button onClick={() => markInProgress(log._id)} className="px-2 py-1 text-xs bg-amber-50 text-amber-600 font-semibold rounded-lg hover:bg-amber-100 transition">Start</button>
@@ -107,7 +107,7 @@ export default function MaintenanceLogs() {
                         )}
                         {canDelete && <button onClick={() => handleDelete(log._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={15} className="text-red-400" /></button>}
                       </div>
-                    </td>
+                    </td>}
                   </tr>
                 ))}
               </tbody>

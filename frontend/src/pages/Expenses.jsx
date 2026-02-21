@@ -101,7 +101,7 @@ export default function Expenses() {
                   <th className="px-5 py-3">Liters</th>
                   <th className="px-5 py-3">Date</th>
                   <th className="px-5 py-3">Description</th>
-                  <th className="px-5 py-3 text-right">Actions</th>
+                  {canDelete && <th className="px-5 py-3 text-right">Actions</th>}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -113,9 +113,9 @@ export default function Expenses() {
                     <td className="px-5 py-3.5 text-slate-500">{exp.liters > 0 ? `${exp.liters} L` : '—'}</td>
                     <td className="px-5 py-3.5 text-slate-500">{new Date(exp.date).toLocaleDateString()}</td>
                     <td className="px-5 py-3.5 text-slate-500 max-w-xs truncate">{exp.description || '—'}</td>
-                    <td className="px-5 py-3.5 text-right">
-                      {canDelete && <button onClick={() => handleDelete(exp._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={15} className="text-red-400" /></button>}
-                    </td>
+                    {canDelete && <td className="px-5 py-3.5 text-right">
+                      <button onClick={() => handleDelete(exp._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={15} className="text-red-400" /></button>
+                    </td>}
                   </tr>
                 ))}
               </tbody>

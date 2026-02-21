@@ -47,12 +47,12 @@ router.post('/', auth, authorize('manager', 'dispatcher', 'safety_officer'), val
 // Update vehicle (owner only, manager/dispatcher/safety_officer)
 router.put('/:id', auth, authorize('manager', 'dispatcher', 'safety_officer'), async (req, res) => {
   try {
-    const vehicle = await Vehicle.findOneAndUpdate(
-      { _id: req.params.id, createdBy: req.user._id },
+    const vehicle = await Vehicle.findByIdAndUpdate(
+      req.params.id,
       req.body,
       { new: true, runValidators: true }
     );
-    if (!vehicle) return res.status(404).json({ message: 'Vehicle not found or access denied.' });
+    if (!vehicle) return res.status(404).json({ message: 'Vehicle not found.' });
     res.json(vehicle);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -62,8 +62,8 @@ router.put('/:id', auth, authorize('manager', 'dispatcher', 'safety_officer'), a
 // Delete vehicle (owner only, manager only)
 router.delete('/:id', auth, authorize('manager'), async (req, res) => {
   try {
-    const vehicle = await Vehicle.findOneAndDelete({ _id: req.params.id, createdBy: req.user._id });
-    if (!vehicle) return res.status(404).json({ message: 'Vehicle not found or access denied.' });
+    const vehicle = await Vehicle.findByIdAndDelete(req.params.id);
+    if (!vehicle) return res.status(404).json({ message: 'Vehicle not found.' });
     res.json({ message: 'Vehicle deleted successfully.' });
   } catch (error) {
     res.status(500).json({ message: error.message });

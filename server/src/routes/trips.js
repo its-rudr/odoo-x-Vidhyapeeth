@@ -62,8 +62,8 @@ router.post('/', auth, authorize('manager', 'dispatcher'), validate(validateTrip
 // Update trip status (lifecycle management, owner only)
 router.put('/:id', auth, authorize('manager', 'dispatcher'), async (req, res) => {
   try {
-    const trip = await Trip.findOne({ _id: req.params.id, createdBy: req.user._id });
-    if (!trip) return res.status(404).json({ message: 'Trip not found or access denied.' });
+    const trip = await Trip.findById(req.params.id);
+    if (!trip) return res.status(404).json({ message: 'Trip not found.' });
 
     const { status, endOdometer } = req.body;
 
@@ -112,8 +112,8 @@ router.put('/:id', auth, authorize('manager', 'dispatcher'), async (req, res) =>
 // Delete trip (owner only, manager only)
 router.delete('/:id', auth, authorize('manager'), async (req, res) => {
   try {
-    const trip = await Trip.findOne({ _id: req.params.id, createdBy: req.user._id });
-    if (!trip) return res.status(404).json({ message: 'Trip not found or access denied.' });
+    const trip = await Trip.findById(req.params.id);
+    if (!trip) return res.status(404).json({ message: 'Trip not found.' });
     if (trip.status === 'Dispatched') {
       await Vehicle.findByIdAndUpdate(trip.vehicle, { status: 'Available' });
       await Driver.findByIdAndUpdate(trip.driver, { status: 'On Duty' });

@@ -102,7 +102,7 @@ export default function Trips() {
                     {trip.cargoDescription && <span className="text-slate-400">• {trip.cargoDescription}</span>}
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                {(canEdit || canDelete) && <div className="flex items-center gap-2">
                   {canEdit && trip.status === 'Draft' && (
                     <button onClick={() => updateStatus(trip._id, 'Dispatched')} className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-semibold rounded-lg hover:bg-blue-100 transition">
                       <Play size={13} /> Dispatch
@@ -121,7 +121,7 @@ export default function Trips() {
                   {canDelete && (trip.status === 'Draft' || trip.status === 'Completed' || trip.status === 'Cancelled') && (
                     <button onClick={() => handleDelete(trip._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={15} className="text-red-400" /></button>
                   )}
-                </div>
+                </div>}
               </div>
             </Card>
           ))}

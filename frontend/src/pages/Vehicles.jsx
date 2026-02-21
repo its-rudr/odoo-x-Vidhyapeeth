@@ -109,7 +109,7 @@ export default function Vehicles() {
                   <th className="px-5 py-3">Capacity</th>
                   <th className="px-5 py-3">Odometer</th>
                   <th className="px-5 py-3">Status</th>
-                  <th className="px-5 py-3 text-right">Actions</th>
+                  {(canEdit || canDelete) && <th className="px-5 py-3 text-right">Actions</th>}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -124,13 +124,13 @@ export default function Vehicles() {
                     <td className="px-5 py-3.5 text-slate-700">{v.maxCapacity} kg</td>
                     <td className="px-5 py-3.5 text-slate-700">{v.odometer.toLocaleString()} km</td>
                     <td className="px-5 py-3.5"><StatusPill status={v.status} /></td>
-                    <td className="px-5 py-3.5">
+                    {(canEdit || canDelete) && <td className="px-5 py-3.5">
                       <div className="flex items-center justify-end gap-1">
                         {canEdit && <button onClick={() => handleEdit(v)} className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors" title="Edit"><Edit2 size={15} className="text-slate-500" /></button>}
                         {canEdit && <button onClick={() => handleToggleOOS(v)} className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors text-xs text-amber-600 font-medium" title="Toggle Out of Service">{v.status === 'Out of Service' ? 'Activate' : 'Retire'}</button>}
                         {canDelete && <button onClick={() => handleDelete(v._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition-colors" title="Delete"><Trash2 size={15} className="text-red-400" /></button>}
                       </div>
-                    </td>
+                    </td>}
                   </tr>
                 ))}
               </tbody>

@@ -42,8 +42,8 @@ router.post('/', auth, authorize('manager', 'safety_officer'), validate(validate
 // Update maintenance log (owner only, manager/safety_officer)
 router.put('/:id', auth, authorize('manager', 'safety_officer'), async (req, res) => {
   try {
-    const log = await Maintenance.findOne({ _id: req.params.id, createdBy: req.user._id });
-    if (!log) return res.status(404).json({ message: 'Maintenance log not found or access denied.' });
+    const log = await Maintenance.findById(req.params.id);
+    if (!log) return res.status(404).json({ message: 'Maintenance log not found.' });
 
     if (req.body.status === 'Completed' && log.status !== 'Completed') {
       log.completedDate = new Date();
@@ -65,8 +65,8 @@ router.put('/:id', auth, authorize('manager', 'safety_officer'), async (req, res
 // Delete maintenance log (owner only, manager only)
 router.delete('/:id', auth, authorize('manager'), async (req, res) => {
   try {
-    const log = await Maintenance.findOneAndDelete({ _id: req.params.id, createdBy: req.user._id });
-    if (!log) return res.status(404).json({ message: 'Maintenance log not found or access denied.' });
+    const log = await Maintenance.findByIdAndDelete(req.params.id);
+    if (!log) return res.status(404).json({ message: 'Maintenance log not found.' });
     res.json({ message: 'Maintenance log deleted.' });
   } catch (error) {
     res.status(500).json({ message: error.message });

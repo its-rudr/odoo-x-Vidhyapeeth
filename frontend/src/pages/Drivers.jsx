@@ -144,7 +144,7 @@ export default function Drivers() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
+                {(canEdit || canDelete) && <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
                   {canEdit && <button onClick={() => handleEdit(d)} className="flex-1 flex items-center justify-center gap-1 py-1.5 text-xs font-semibold text-slate-600 bg-slate-50 hover:bg-slate-100 rounded-lg transition"><Edit2 size={12} /> Edit</button>}
                   {canEdit && (d.status !== 'Suspended' ? (
                     <button onClick={() => handleStatusChange(d._id, 'Suspended')} className="flex-1 py-1.5 text-xs font-semibold text-amber-600 bg-amber-50 hover:bg-amber-100 rounded-lg transition">Suspend</button>
@@ -152,7 +152,7 @@ export default function Drivers() {
                     <button onClick={() => handleStatusChange(d._id, 'On Duty')} className="flex-1 py-1.5 text-xs font-semibold text-emerald-600 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition">Activate</button>
                   ))}
                   {canDelete && <button onClick={() => handleDelete(d._id)} className="p-1.5 hover:bg-red-50 rounded-lg transition"><Trash2 size={14} className="text-red-400" /></button>}
-                </div>
+                </div>}
               </Card>
             );
           })}

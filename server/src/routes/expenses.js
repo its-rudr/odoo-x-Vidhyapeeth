@@ -37,13 +37,13 @@ router.post('/', auth, authorize('manager', 'analyst'), validate(validateExpense
 // Update expense (owner only, manager/analyst)
 router.put('/:id', auth, authorize('manager', 'analyst'), async (req, res) => {
   try {
-    const expense = await Expense.findOneAndUpdate(
-      { _id: req.params.id, createdBy: req.user._id },
+    const expense = await Expense.findByIdAndUpdate(
+      req.params.id,
       req.body,
       { new: true, runValidators: true }
     ).populate('vehicle', 'name licensePlate type')
      .populate('trip', 'origin destination');
-    if (!expense) return res.status(404).json({ message: 'Expense not found or access denied.' });
+    if (!expense) return res.status(404).json({ message: 'Expense not found.' });
     res.json(expense);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -53,8 +53,8 @@ router.put('/:id', auth, authorize('manager', 'analyst'), async (req, res) => {
 // Delete expense (owner only, manager only)
 router.delete('/:id', auth, authorize('manager'), async (req, res) => {
   try {
-    const expense = await Expense.findOneAndDelete({ _id: req.params.id, createdBy: req.user._id });
-    if (!expense) return res.status(404).json({ message: 'Expense not found or access denied.' });
+    const expense = await Expense.findByIdAndDelete(req.params.id);
+    if (!expense) return res.status(404).json({ message: 'Expense not found.' });
     res.json({ message: 'Expense deleted.' });
   } catch (error) {
     res.status(500).json({ message: error.message });
