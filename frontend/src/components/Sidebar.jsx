@@ -59,8 +59,8 @@ export default function Sidebar() {
             <Zap size={22} className="text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-bold tracking-tight text-slate-900">FleetFlow</h1>
-            <p className="text-[10px] text-slate-500 uppercase tracking-widest">Fleet Management</p>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">FleetFlow</h1>
+            <p className="text-sm text-slate-500 uppercase tracking-widest">Fleet Management</p>
           </div>
         </div>
 
@@ -72,19 +72,19 @@ export default function Sidebar() {
               to={to}
               end={to === '/'}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group ${
+                `flex items-center gap-3 px-4 py-3 rounded-xl text-lg font-semibold transition-all duration-200 group ${
                   isActive
                     ? 'bg-[#FCF8D8] text-[#DD700B]'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`
               }
             >
-              <Icon size={18} className="shrink-0 group-hover:scale-110 transition-transform" />
+              <Icon size={20} className="shrink-0 group-hover:scale-110 transition-transform" />
               <div className="flex-1 min-w-0">
-                <span className="block leading-tight">{label}</span>
-                <span className="block text-[10px] opacity-60 leading-tight">{desc}</span>
+                <span className="block leading-tight text-xl">{label}</span>
+                <span className="block text-sm opacity-60 leading-tight">{desc}</span>
               </div>
-              <ChevronRight size={14} className="opacity-0 group-hover:opacity-50 transition-opacity shrink-0" />
+              <ChevronRight size={16} className="opacity-0 group-hover:opacity-50 transition-opacity shrink-0" />
             </NavLink>
           ))}
         </nav>
@@ -96,10 +96,10 @@ export default function Sidebar() {
               {user?.name?.charAt(0)?.toUpperCase()}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium truncate text-slate-900">{user?.name}</p>
+              <p className="text-lg font-semibold truncate text-slate-900">{user?.name}</p>
               <div className="flex items-center gap-1">
-                <Shield size={10} className="text-[#DD700B]" />
-                <p className="text-[11px] text-[#DD700B] font-medium">{getRoleLabel(user?.role)}</p>
+                <Shield size={12} className="text-[#DD700B]" />
+                <p className="text-base text-[#DD700B] font-medium">{getRoleLabel(user?.role)}</p>
               </div>
             </div>
           </div>

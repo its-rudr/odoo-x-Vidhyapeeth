@@ -83,9 +83,9 @@ export default function Trips() {
       ) : trips.length === 0 ? (
         <Card><EmptyState icon={Route} title="No trips found" description="Create a new trip to dispatch cargo" /></Card>
       ) : (
-        <div className="grid gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
           {trips.map((trip) => (
-            <Card key={trip._id} className="p-5 hover:shadow-md transition-shadow">
+            <Card key={trip._id} className="p-5">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">

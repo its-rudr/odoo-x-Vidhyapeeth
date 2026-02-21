@@ -37,9 +37,11 @@ export function PageHeader({ title, subtitle, children }) {
   );
 }
 
-export function Card({ children, className = '' }) {
+export function Card({ children, className = '', noHover }) {
   return (
-    <div className={`bg-white rounded-2xl border border-slate-200/60 shadow-sm ${className}`}>
+    <div
+      className={`bg-white rounded-2xl border border-slate-200/60 shadow-sm transition-all duration-300 transform overflow-hidden will-change-transform ${className} ${noHover ? '' : 'hover:shadow-[0_4px_16px_0_rgba(59,130,246,0.38)] hover:border-[#3B82F6] hover:scale-105'}`}
+    >
       {children}
     </div>
   );
@@ -60,15 +62,15 @@ export function KPICard({ icon: Icon, label, value, sublabel, color = 'orange' }
   const colorMap = colors[color] || colors.orange;
 
   return (
-    <Card className="p-5 hover:shadow-md transition-shadow">
+    <Card className="p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm font-medium text-slate-500">{label}</p>
-          <p className="text-3xl font-bold text-slate-900 mt-1">{value}</p>
-          {sublabel && <p className="text-xs text-slate-400 mt-1">{sublabel}</p>}
+          <p className="text-base font-semibold text-slate-500">{label}</p>
+          <p className="text-4xl font-extrabold text-slate-900 mt-2">{value}</p>
+          {sublabel && <p className="text-sm text-slate-400 mt-2">{sublabel}</p>}
         </div>
-        <div className="p-3 rounded-xl" style={{ backgroundColor: colorMap.bg }}>
-          <Icon size={22} style={{ color: colorMap.grad }} strokeWidth={2} />
+        <div className="p-4 rounded-xl" style={{ backgroundColor: colorMap.bg }}>
+          <Icon size={28} style={{ color: colorMap.grad }} strokeWidth={2} />
         </div>
       </div>
     </Card>

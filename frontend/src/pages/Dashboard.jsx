@@ -43,16 +43,16 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen w-full bg-gradient-to-br from-accent-light via-white to-accent-muted py-8 px-2 sm:px-6 lg:px-12 transition-all duration-500">
       <PageHeader
-        title={`${getRoleLabel(role)} Dashboard`}
-        subtitle={roleGreetings[role]}
+        title={<span className="text-primary drop-shadow-md">{getRoleLabel(role)} Dashboard</span>}
+        subtitle={<span className="text-secondary font-medium">{roleGreetings[role]}</span>}
       />
 
       {/* Role-specific greeting banner */}
-      <div className="mb-6 p-4 rounded-xl border border-slate-200/60" style={{ background: 'linear-gradient(135deg, #FCF8D8 0%, #FFF 50%, #DBEAFE 100%)' }}>
-        <p className="text-sm text-slate-600">
-          Welcome back, <span className="font-semibold text-slate-900">{user?.name}</span>!
+      <div className="mb-8 p-6 rounded-2xl border border-accent-muted shadow-md bg-gradient-to-r from-accent-light via-white to-accent-muted">
+        <p className="text-base text-slate-700 font-semibold">
+          Welcome back, <span className="font-bold text-primary">{user?.name}</span>!
           {role === 'manager' && ' You have full access to manage the entire fleet.'}
           {role === 'dispatcher' && ' Create trips, assign drivers, and track cargo loads.'}
           {role === 'safety_officer' && ' Monitor driver compliance, license status, and vehicle maintenance.'}
@@ -61,26 +61,24 @@ export default function Dashboard() {
       </div>
 
       {/* Dashboard Filters */}
-      <div className="flex flex-wrap gap-3 mb-6">
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-          <Filter size={14} /> Filters
+      <div className="flex flex-wrap gap-4 mb-8 items-center">
+        <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider bg-accent-light px-3 py-2 rounded-xl shadow-sm">
+          <Filter size={16} /> Filters
         </div>
-        <select value={filters.type} onChange={(e) => setFilters(f => ({ ...f, type: e.target.value }))} className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }}>
+        <select value={filters.type} onChange={(e) => setFilters(f => ({ ...f, type: e.target.value }))} className="px-4 py-2 bg-white border border-accent-muted rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 shadow transition-all">
           <option value="">All Types</option>
           <option>Truck</option><option>Van</option><option>Bike</option>
         </select>
-        <select value={filters.status} onChange={(e) => setFilters(f => ({ ...f, status: e.target.value }))} className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }}>
+        <select value={filters.status} onChange={(e) => setFilters(f => ({ ...f, status: e.target.value }))} className="px-4 py-2 bg-white border border-accent-muted rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 shadow transition-all">
           <option value="">All Statuses</option>
           <option>Available</option><option>On Trip</option><option>In Shop</option><option>Out of Service</option>
         </select>
-        <select value={filters.region} onChange={(e) => setFilters(f => ({ ...f, region: e.target.value }))} className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }}>
+        <select value={filters.region} onChange={(e) => setFilters(f => ({ ...f, region: e.target.value }))} className="px-4 py-2 bg-white border border-accent-muted rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 shadow transition-all">
           <option value="">All Regions</option>
           <option value="North">North</option>
           <option value="South">South</option>
           <option value="East">East</option>
           <option value="West">West</option>
-          <option value="Central">Central</option>
-          <option value="Default">Default</option>
         </select>
         {(filters.type || filters.status || filters.region) && (
           <button onClick={() => setFilters({ type: '', status: '', region: '' })} className="px-3 py-2 text-xs font-semibold text-red-500 bg-red-50 hover:bg-red-100 rounded-xl transition">Clear</button>

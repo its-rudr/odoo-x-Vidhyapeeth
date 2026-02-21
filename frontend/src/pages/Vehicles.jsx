@@ -98,7 +98,7 @@ export default function Vehicles() {
       ) : vehicles.length === 0 ? (
         <Card><EmptyState icon={Truck} title="No vehicles found" description="Add your first fleet vehicle to get started" /></Card>
       ) : (
-        <Card className="overflow-hidden">
+        <Card className="overflow-hidden" noHover>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
