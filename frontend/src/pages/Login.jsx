@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Zap, Mail, Lock } from 'lucide-react';
+import { Zap, Mail, Lock, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function Login() {
@@ -9,8 +9,15 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [scrolled, setScrolled] = useState(false);
 
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const validate = () => {
     const errs = {};
@@ -28,7 +35,7 @@ export default function Login() {
     try {
       await login(form.email, form.password);
       toast.success('Welcome back!');
-      navigate('/', { replace: true });
+      navigate('/dashboard', { replace: true });
     } catch (err) {
       toast.error(err.response?.data?.message || 'Invalid credentials');
     } finally {
@@ -37,7 +44,24 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4 pt-28 relative overflow-hidden">
+      {/* ──────── Navbar ──────── */}
+      <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 border-b ${scrolled ? 'bg-white/95 backdrop-blur-2xl shadow-xl shadow-black/[.05] border-slate-300/70' : 'bg-white/80 backdrop-blur-md border-slate-200/40'}`}>
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
+          <div className="flex items-center gap-4 group cursor-pointer" onClick={() => navigate('/')}>
+            <div className="w-12 h-12 rounded-2xl bg-white p-2 shadow-xl shadow-black/[0.05] border border-slate-100 flex items-center justify-center group-hover:rotate-6 group-hover:scale-110 transition-all duration-500">
+              <img src="/Images/FleetFlow.webp" alt="FleetFlow" className="w-full h-full object-contain rounded-lg" />
+            </div>
+            <span className="text-2xl font-black text-slate-900 tracking-tighter">FleetFlow</span>
+          </div>
+          <div className="flex items-center gap-6">
+            <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-[#DD700B] transition uppercase tracking-widest">
+              <ArrowLeft size={16} /> Back to Home
+            </button>
+          </div>
+        </div>
+      </nav>
+
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'rgba(221, 112, 11, 0.05)' }} />

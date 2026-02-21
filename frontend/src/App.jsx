@@ -20,20 +20,27 @@ function ProtectedRoute({ children }) {
       <div className="w-10 h-10 border-4 border-[#DD700B] border-t-transparent rounded-full animate-spin" />
     </div>
   );
-  return user ? children : <Navigate to="/login" replace />;
+  return user ? children : <Navigate to="/" replace />;
 }
 
 function PublicRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return null;
-  return user ? <Navigate to="/" replace /> : children;
+  return user ? <Navigate to="/dashboard" replace /> : children;
+}
+
+// Landing page: show landing if not logged in, redirect to dashboard if logged in
+function LandingRoute() {
+  const { user, loading } = useAuth();
+  if (loading) return null;
+  return user ? <Navigate to="/dashboard" replace /> : <LandingPage />;
 }
 
 // Role-based route guard - redirects to dashboard if no permission
 function RoleRoute({ module, children }) {
   const { user } = useAuth();
   if (!user || !hasPermission(user.role, module, 'view')) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
   return children;
 }
@@ -44,9 +51,9 @@ export default function App() {
       <AuthProvider>
         <Toaster position="top-right" toastOptions={{ duration: 3000, style: { borderRadius: '12px', background: '#1e293b', color: '#fff', fontSize: '14px' } }} />
         <Routes>
-          <Route path="/landing" element={<LandingPage />} />
+          <Route path="/" element={<LandingRoute />} />
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+          <Route path="/dashboard" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
             <Route index element={<Dashboard />} />
             <Route path="vehicles" element={<RoleRoute module="vehicles"><Vehicles /></RoleRoute>} />
             <Route path="trips" element={<RoleRoute module="trips"><Trips /></RoleRoute>} />

@@ -7,13 +7,13 @@ import {
 import { useState, useEffect } from 'react';
 
 const allLinks = [
-  { to: '/', icon: LayoutDashboard, label: 'Dashboard', desc: 'Overview', module: 'dashboard' },
-  { to: '/vehicles', icon: Truck, label: 'Vehicles', desc: 'Fleet assets', module: 'vehicles' },
-  { to: '/trips', icon: Route, label: 'Trips', desc: 'Dispatches', module: 'trips' },
-  { to: '/maintenance', icon: Wrench, label: 'Maintenance', desc: 'Service logs', module: 'maintenance' },
-  { to: '/expenses', icon: Fuel, label: 'Expenses', desc: 'Cost tracking', module: 'expenses' },
-  { to: '/drivers', icon: Users, label: 'Drivers', desc: 'Profiles', module: 'drivers' },
-  { to: '/analytics', icon: BarChart3, label: 'Analytics', desc: 'Reports', module: 'analytics' },
+  { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', desc: 'Overview', module: 'dashboard' },
+  { to: '/dashboard/vehicles', icon: Truck, label: 'Vehicles', desc: 'Fleet assets', module: 'vehicles' },
+  { to: '/dashboard/trips', icon: Route, label: 'Trips', desc: 'Dispatches', module: 'trips' },
+  { to: '/dashboard/maintenance', icon: Wrench, label: 'Maintenance', desc: 'Service logs', module: 'maintenance' },
+  { to: '/dashboard/expenses', icon: Fuel, label: 'Expenses', desc: 'Cost tracking', module: 'expenses' },
+  { to: '/dashboard/drivers', icon: Users, label: 'Drivers', desc: 'Profiles', module: 'drivers' },
+  { to: '/dashboard/analytics', icon: BarChart3, label: 'Analytics', desc: 'Reports', module: 'analytics' },
 ];
 
 export default function Sidebar() {
@@ -30,7 +30,7 @@ export default function Sidebar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login', { replace: true });
+    navigate('/', { replace: true });
   };
 
   return (
@@ -70,7 +70,7 @@ export default function Sidebar() {
             <NavLink
               key={to}
               to={to}
-              end={to === '/'}
+              end={to === '/dashboard'}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl text-lg font-semibold transition-all duration-200 group ${
                   isActive
