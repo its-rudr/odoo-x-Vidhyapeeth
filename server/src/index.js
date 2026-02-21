@@ -40,16 +40,39 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message || 'Internal server error' });
 });
 
+// Kill any existing process on the port, then start
+const { execSync } = require('child_process');
+
+function killPort(port) {
+  try {
+    if (process.platform === 'win32') {
+      const result = execSync(`netstat -ano | findstr :${port} | findstr LISTENING`, { encoding: 'utf8' });
+      const lines = result.trim().split('\n');
+      const pids = [...new Set(lines.map(l => l.trim().split(/\s+/).pop()))];
+      for (const pid of pids) {
+        if (pid && pid !== '0' && pid !== String(process.pid)) {
+          try { execSync(`taskkill /F /PID ${pid}`, { stdio: 'ignore' }); console.log(`Killed old process on port ${port} (PID ${pid})`); } catch {}
+        }
+      }
+    } else {
+      try { execSync(`lsof -ti:${port} | xargs kill -9`, { stdio: 'ignore' }); } catch {}
+    }
+  } catch {}
+}
+
 // Connect to MongoDB and start server
 mongoose.connect(MONGO_URI)
-  .then(() => {
+  .then(async () => {
     console.log('Connected to MongoDB');
+    killPort(PORT);
+    // Small delay to let OS release the port
+    await new Promise(r => setTimeout(r, 1000));
     const server = app.listen(PORT, () => {
       console.log(`FleetFlow server running on http://localhost:${PORT}`);
     });
     server.on('error', (err) => {
       if (err.code === 'EADDRINUSE') {
-        console.error(`Port ${PORT} is already in use. Kill the other process or use a different port.`);
+        console.error(`Port ${PORT} is still in use. Run: taskkill /F /IM node.exe`);
       } else {
         console.error('Server error:', err.message);
       }
