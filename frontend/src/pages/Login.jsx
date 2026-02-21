@@ -1,31 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Zap, Mail, Lock, User, BadgeCheck } from 'lucide-react';
+import { Zap, Mail, Lock } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function Login() {
-  const [isRegister, setIsRegister] = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'dispatcher' });
+  const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
-  const { login, register } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
 
   const validate = () => {
     const errs = {};
-    if (isRegister && !form.name.trim()) errs.name = 'Name is required';
     if (!form.email.trim()) errs.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = 'Invalid email format';
     if (!form.password) errs.password = 'Password is required';
-    else if (isRegister) {
-      if (form.password.length < 8) errs.password = 'Min 8 characters required';
-      else if (!/[A-Z]/.test(form.password)) errs.password = 'Need at least one uppercase letter';
-      else if (!/[a-z]/.test(form.password)) errs.password = 'Need at least one lowercase letter';
-      else if (!/[0-9]/.test(form.password)) errs.password = 'Need at least one number';
-      else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(form.password)) errs.password = 'Need at least one special character';
-    }
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -35,16 +26,11 @@ export default function Login() {
     if (!validate()) return;
     setLoading(true);
     try {
-      if (isRegister) {
-        await register(form);
-        toast.success('Account created successfully!');
-      } else {
-        await login(form.email, form.password);
-        toast.success('Welcome back!');
-      }
+      await login(form.email, form.password);
+      toast.success('Welcome back!');
       navigate('/', { replace: true });
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Something went wrong');
+      toast.error(err.response?.data?.message || 'Invalid credentials');
     } finally {
       setLoading(false);
     }
@@ -70,28 +56,10 @@ export default function Login() {
 
         {/* Card */}
         <div className="bg-white border rounded-3xl p-8 shadow-xl" style={{ borderColor: '#D9DADF' }}>
-          <h2 className="text-xl font-bold text-slate-900 mb-1">{isRegister ? 'Create Account' : 'Welcome Back'}</h2>
-          <p className="text-sm text-slate-500 mb-6">{isRegister ? 'Register to access the fleet system' : 'Sign in to your account'}</p>
+          <h2 className="text-xl font-bold text-slate-900 mb-1">Welcome Back</h2>
+          <p className="text-sm text-slate-500 mb-6">Sign in to your account</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {isRegister && (
-              <div className="relative">
-                <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={form.name}
-                  onChange={(e) => { setForm({ ...form, name: e.target.value }); setErrors(prev => ({ ...prev, name: '' })); }}
-                  required
-                  className="w-full pl-10 pr-4 py-3 border rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 transition text-sm"
-                  style={{ borderColor: errors.name ? '#EF4444' : '#D9DADF', '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }}
-                  onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }}
-                  onBlur={(e) => { e.target.style.borderColor = errors.name ? '#EF4444' : '#D9DADF'; }}
-                />
-                {errors.name && <p className="text-xs text-red-400 mt-1 ml-1">{errors.name}</p>}
-              </div>
-            )}
-
             <div className="relative">
               <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
@@ -123,27 +91,7 @@ export default function Login() {
                 onBlur={(e) => { e.target.style.borderColor = errors.password ? '#EF4444' : '#D9DADF'; }}
               />
               {errors.password && <p className="text-xs text-red-400 mt-1 ml-1">{errors.password}</p>}
-              {isRegister && !errors.password && <p className="text-xs text-slate-400 mt-1 ml-1">Min 8 chars: uppercase, lowercase, number & special char</p>}
             </div>
-
-            {isRegister && (
-              <div className="relative">
-                <BadgeCheck size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-                <select
-                  value={form.role}
-                  onChange={(e) => setForm({ ...form, role: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 border rounded-xl text-slate-900 focus:outline-none focus:ring-2 transition text-sm appearance-none"
-                  style={{ borderColor: '#D9DADF', '--tw-ring-color': 'rgba(221, 112, 11, 0.2)' }}
-                  onFocus={(e) => { e.target.style.borderColor = '#DD700B'; }}
-                  onBlur={(e) => { e.target.style.borderColor = '#D9DADF'; }}
-                >
-                  <option value="manager" className="bg-white text-slate-900">Fleet Manager</option>
-                  <option value="dispatcher" className="bg-white text-slate-900">Dispatcher</option>
-                  <option value="safety_officer" className="bg-white text-slate-900">Safety Officer</option>
-                  <option value="analyst" className="bg-white text-slate-900">Financial Analyst</option>
-                </select>
-              </div>
-            )}
 
             <button
               type="submit"
@@ -153,20 +101,11 @@ export default function Login() {
               onMouseEnter={(e) => { if (!loading) e.target.style.backgroundColor = '#C25C07'; }}
               onMouseLeave={(e) => { e.target.style.backgroundColor = '#DD700B'; }}
             >
-              {loading ? 'Please wait...' : isRegister ? 'Create Account' : 'Sign In'}
+              {loading ? 'Please wait...' : 'Sign In'}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => setIsRegister(!isRegister)}
-              className="text-sm text-slate-500 transition"
-              onMouseEnter={(e) => { e.target.style.color = '#DD700B'; }}
-              onMouseLeave={(e) => { e.target.style.color = '#64748b'; }}
-            >
-              {isRegister ? 'Already have an account? Sign in' : "Don't have an account? Register"}
-            </button>
-          </div>
+          <p className="mt-6 text-center text-xs text-slate-400">Contact your administrator for account access</p>
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-6">FleetFlow &copy; 2026 &mdash; Hackathon Project</p>

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { loginAPI, registerAPI, getMeAPI } from '../api';
+import { loginAPI, getMeAPI } from '../api';
 
 const AuthContext = createContext(null);
 
@@ -35,15 +35,6 @@ export function AuthProvider({ children }) {
     return res.data;
   }, []);
 
-  const register = useCallback(async (data) => {
-    const res = await registerAPI(data);
-    const { token, user: userData } = res.data;
-    localStorage.setItem('fleetflow_token', token);
-    localStorage.setItem('fleetflow_user', JSON.stringify(userData));
-    setUser(userData);
-    return res.data;
-  }, []);
-
   const logout = useCallback(() => {
     localStorage.removeItem('fleetflow_token');
     localStorage.removeItem('fleetflow_user');
@@ -51,7 +42,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -2,7 +2,6 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { auth } = require('../middleware/auth');
-const { validate, validateRegister, validateLogin } = require('../middleware/validate');
 const router = express.Router();
 
 // Simple in-memory rate limiter for auth endpoints
@@ -21,47 +20,6 @@ function checkRateLimit(ip) {
   record.count++;
   return true;
 }
-
-// Password strength validation
-function validatePasswordStrength(password) {
-  if (password.length < 8) return 'Password must be at least 8 characters long.';
-  if (!/[A-Z]/.test(password)) return 'Password must contain at least one uppercase letter.';
-  if (!/[a-z]/.test(password)) return 'Password must contain at least one lowercase letter.';
-  if (!/[0-9]/.test(password)) return 'Password must contain at least one number.';
-  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) return 'Password must contain at least one special character.';
-  return null;
-}
-
-// Register
-router.post('/register', async (req, res) => {
-  try {
-    const { name, email, password, role } = req.body;
-
-    // Inline validation
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: 'Name, email and password are required.' });
-    }
-
-    // Password strength check
-    const pwError = validatePasswordStrength(password);
-    if (pwError) return res.status(400).json({ message: pwError });
-
-    // Email format check
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: 'Please enter a valid email address.' });
-    }
-
-    const exists = await User.findOne({ email: email.toLowerCase() });
-    if (exists) return res.status(400).json({ message: 'Email already registered.' });
-
-    const user = await User.create({ name: name.trim(), email: email.toLowerCase(), password, role });
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'fleetflow_secret_2026', { expiresIn: '7d' });
-    res.status(201).json({ user, token });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 
 // Login with rate limiting
 router.post('/login', async (req, res) => {
