@@ -182,9 +182,9 @@ export default function Trips() {
         <div className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1">Final Odometer Reading (km)</label>
-            <input type="number" min="0" value={endOdometer} onChange={(e) => setEndOdometer(e.target.value)} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30" placeholder="Enter final odometer" />
+            <input type="number" min="0" value={endOdometer} onChange={(e) => setEndOdometer(e.target.value)} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ focusBoxShadow: 'none' }} onFocus={(e) => { e.style.boxShadow = '0 0 0 3px rgba(221, 112, 11, 0.1)'; }} onBlur={(e) => { e.style.boxShadow = ''; }} placeholder="Enter final odometer" />
           </div>
-          <button onClick={() => updateStatus(completeModal, 'Completed')} className="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all text-sm">
+          <button onClick={() => updateStatus(completeModal, 'Completed')} className="w-full py-2.5 text-white font-semibold rounded-xl shadow-lg transition-all text-sm" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.style.backgroundColor = '#DD700B'; }}>
             Mark Completed
           </button>
         </div>

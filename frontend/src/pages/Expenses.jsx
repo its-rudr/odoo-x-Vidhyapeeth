@@ -157,16 +157,16 @@ export default function Expenses() {
           </div>
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1">Trip (optional)</label>
-            <select value={form.trip} onChange={(e) => setForm({ ...form, trip: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30">
+            <select value={form.trip} onChange={(e) => setForm({ ...form, trip: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ focusBoxShadow: 'none' }} onFocus={(e) => { e.style.boxShadow = '0 0 0 3px rgba(221, 112, 11, 0.1)'; }} onBlur={(e) => { e.style.boxShadow = ''; }}>
               <option value="">No trip linked</option>
               {trips.map((t) => <option key={t._id} value={t._id}>{t.origin} → {t.destination} ({t.status})</option>)}
             </select>
           </div>
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1">Description</label>
-            <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30" placeholder="e.g. Diesel refill at highway station" />
+            <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2" style={{ focusBoxShadow: 'none' }} onFocus={(e) => { e.style.boxShadow = '0 0 0 3px rgba(221, 112, 11, 0.1)'; }} onBlur={(e) => { e.style.boxShadow = ''; }} placeholder="e.g. Diesel refill at highway station" />
           </div>
-          <button type="submit" className="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all text-sm">
+          <button type="submit" className="w-full py-2.5 text-white font-semibold rounded-xl shadow-lg transition-all text-sm" style={{ backgroundColor: '#DD700B', boxShadow: '0 10px 25px rgba(221, 112, 11, 0.15)' }} onMouseEnter={(e) => { e.style.backgroundColor = '#C25C07'; }} onMouseLeave={(e) => { e.style.backgroundColor = '#DD700B'; }}>
             Record Expense
           </button>
         </form>

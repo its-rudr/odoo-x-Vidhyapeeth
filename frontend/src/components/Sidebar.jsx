@@ -105,7 +105,7 @@ export default function Sidebar() {
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-slate-600 rounded-xl transition-all" style={{ color: '#DD700B' }}"
+            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm rounded-xl transition-all hover:bg-slate-100" style={{ color: '#DD700B' }}
           >
             <LogOut size={16} />
             Sign Out
